@@ -1,34 +1,37 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
+    <div className="container">
+      <header className="hero">
+        <h1 className="title">VolunHub</h1>
+        <p className="description">
+          A volunteering event finder and tracker app. Allows users to easily find and sign up for volunteering events.
         </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+      </header>
+
+      <main>
+        <section className="card">
+          <h2>Planned MVP Features</h2>
+          <ul className="feature-list">
+            <li>Browse events + view event details</li>
+            <li>Search + filter by cause, location, date, and type</li>
+            <li>Save events for later (favorites)</li>
+            <li>Sign up for events + manage signups</li>
+            <li>Agenda view of signed-up events grouped by date</li>
+          </ul>
+        </section>
+
+        <section className="card complete-tier">
+          <h2>Complete Tier <span className="badge">Later</span></h2>
+          <p className="tier-note">Powered by Supabase Auth + Supabase Database</p>
+          <ul className="feature-list">
+            <li>Users can create profiles with personal info, volunteering preferences, and skills</li>
+            <li>Signed-in users access a home page with recommended events based on their preferences</li>
+          </ul>
+        </section>
+      </main>
+    </div>
   )
 }
 
