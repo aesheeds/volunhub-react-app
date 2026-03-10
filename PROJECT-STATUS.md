@@ -27,17 +27,19 @@ The app is scaffolded, deployed, and mid-development. MVP features are being bui
 - [x] `Browse` page (`/`) — event grid sorted by date, search + multi-select filter bar
 - [x] `EventCard` component — shows title, org, cause tag, type tag, location, date, time, spots
 - [x] `FilterBar` component — collapsible panel, multi-select pill toggles for cause/location/type, active filter badge, clear all
-- [x] `EventDetail` page (`/events/:id`) — full event info, date/time/location/spots meta grid, placeholder Save + Sign Up buttons
-- [x] Placeholder pages — `Saved`, `Signups`, `Agenda` (render page name only)
+- [x] `EventDetail` page (`/events/:id`) — full event info, meta grid, working Save button, placeholder Sign Up button. Back button uses `navigate(-1)`.
+- [x] `useSaved` hook — manages `volunhub_saved` string[] in localStorage
+- [x] `Saved` page (`/saved`) — shows saved events sorted by date, empty state message
+- [x] Placeholder pages — `Signups`, `Agenda` (render page name only)
 
 ---
 
 ## In Progress
 
-**Step 6 — Save / Favorites**
-- Next immediate task: create `useSaved` hook (`volunhub_saved: string[]`)
-- Then: wire Save button on EventDetail
-- Then: build Saved page
+**Step 7 — Sign Up**
+- Next immediate task: create `useSignups` hook (`volunhub_signups: Signup[]`)
+- Then: wire Sign Up button on EventDetail (with optional note input)
+- Then: derive remaining spots from signups count
 
 ---
 
@@ -45,17 +47,15 @@ The app is scaffolded, deployed, and mid-development. MVP features are being bui
 
 | Step | Feature | Status |
 |------|---------|--------|
-| 6 | Save / Favorites (`useSaved` hook + Saved page) | 🔲 Not started |
 | 7 | Sign Up from EventDetail (`useSignups` hook) | 🔲 Not started |
 | 8 | Signups page — list view, cancel, edit note | 🔲 Not started |
 | 9 | Agenda page — date-grouped view, cancel | 🔲 Not started |
 | 10 | Styling pass — colors, fonts, images, polish | 🔲 Not started |
 
 ### Notes on remaining steps
-- **Step 7**: Sign up button on EventDetail opens a small form (optional note). Spots available will become derived: `event.spotsAvailable - signups.filter(s => s.eventId === id).length`
+- **Step 7**: Sign up button on EventDetail opens a small inline form (optional note). Spots available will become derived: `event.spotsAvailable - signups.filter(s => s.eventId === id).length`
 - **Steps 8 & 9**: Both use the same `useSignups` hook — no duplicated logic. Signups = list view, Agenda = date-grouped view.
 - **Step 10**: Styling pass includes adding event images (requires adding an `imageUrl` field to `events.json`), font choices, color refinements, and mobile responsiveness check.
-- **Back button**: Currently always navigates to `/`. Should be changed to `navigate(-1)` during polish so it works correctly from Saved page too.
 
 ---
 

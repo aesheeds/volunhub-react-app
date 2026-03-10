@@ -1,11 +1,13 @@
 import { useParams, useNavigate } from 'react-router-dom'
 import useLocalStorage from '../hooks/useLocalStorage'
+import useSaved from '../hooks/useSaved'
 import './EventDetail.css'
 
 function EventDetail() {
   const { id } = useParams()
   const navigate = useNavigate()
   const [events] = useLocalStorage('volunhub_events', [])
+  const { isSaved, toggleSaved } = useSaved()
 
   const event = events.find(e => e.id === id)
 
@@ -13,7 +15,7 @@ function EventDetail() {
     return (
       <div className="not-found">
         <h2>Event not found.</h2>
-        <button onClick={() => navigate('/')}>Back to Browse</button>
+        <button onClick={() => navigate(-1)}>Back to Browse</button>
       </div>
     )
   }
@@ -24,7 +26,7 @@ function EventDetail() {
 
   return (
     <div className="event-detail">
-      <button className="back-btn" onClick={() => navigate('/')}>← Back to Browse</button>
+      <button className="back-btn" onClick={() => navigate(-1)}>← Back</button>
 
       <div className="detail-card">
         <div className="detail-tags">
@@ -57,7 +59,12 @@ function EventDetail() {
         <p className="detail-description">{event.description}</p>
 
         <div className="detail-actions">
-          <button className="btn-save">♡ Save Event</button>
+          <button
+            className={`btn-save ${isSaved(event.id) ? 'saved' : ''}`}
+            onClick={() => toggleSaved(event.id)}
+          >
+            {isSaved(event.id) ? '♥ Saved' : '♡ Save Event'}
+          </button>
           <button className="btn-signup">Sign Up</button>
         </div>
       </div>
