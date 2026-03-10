@@ -11,6 +11,12 @@
   margin-bottom: 1.5rem;
 }
 
+.no-results {
+  color: #888;
+  font-size: 0.95rem;
+  grid-column: 1 / -1;
+}
+
 .events-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
