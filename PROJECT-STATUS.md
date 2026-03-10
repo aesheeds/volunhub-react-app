@@ -1,45 +1,49 @@
 # VolunHub — Project Status
 
 ## Current State
-The app is scaffolded, deployed, and mid-development. MVP features are being built step by step. The app is live on Netlify with continuous deployment from GitHub (main branch).
+The app is mid-development. Most MVP features are complete. Currently finishing Step 8 (Signups page). The app is live on Netlify with continuous deployment from GitHub (main branch).
 
 - **Local dev:** `npm run dev` → `http://localhost:5173`
 - **GitHub:** https://github.com/aesheeds/volunhub-react-app
 - **Netlify:** Deployed (auto-deploys on every push to main)
+- **Working directory:** `d:/Users/shenu/Documents/Low No Code/Midterm Project/volunhub`
 
 ---
 
 ## Completed
 
 ### Infrastructure
-- [x] React + Vite project scaffolded
-- [x] `react-router-dom` installed and configured
-- [x] GitHub repo created and connected to Netlify
-- [x] Continuous deployment working (push to main → auto redeploy)
+- [x] React + Vite scaffolded, react-router-dom v7 installed
+- [x] GitHub repo connected to Netlify, continuous deployment working
+- [x] Seed logic in `App.jsx` — seeds `volunhub_events` from `events.json` on first load (only if key doesn't exist)
 
 ### Data & Storage
-- [x] `src/data/events.json` — 20 sample events (Florida locations, varied causes/types/dates)
-- [x] `useLocalStorage` hook — generic read/write abstraction for localStorage
-- [x] Seed logic in `App.jsx` — seeds `volunhub_events` from `events.json` on first load
+- [x] `src/data/events.json` — 20 sample events (Florida locations, varied causes/types/dates Apr–May 2026)
+- [x] `useLocalStorage` hook — generic read/write abstraction, supports function updater pattern
+- [x] `useSaved` hook — manages `volunhub_saved: string[]`
+- [x] `useSignups` hook — manages `volunhub_signups: Signup[]`, exposes: `isSignedUp`, `getSignup`, `addSignup`, `cancelSignup`, `editNote`, `getSignupCountForEvent`
 
 ### Pages & Components
-- [x] `Nav` — navigation bar with links to all 5 pages, active link indicator
-- [x] `Browse` page (`/`) — event grid sorted by date, search + multi-select filter bar
-- [x] `EventCard` component — shows title, org, cause tag, type tag, location, date, time, spots
-- [x] `FilterBar` component — collapsible panel, multi-select pill toggles for cause/location/type, active filter badge, clear all
-- [x] `EventDetail` page (`/events/:id`) — full event info, meta grid, working Save + Sign Up buttons. Remaining spots derived live. Back button uses `navigate(-1)`.
-- [x] `useSaved` hook — manages `volunhub_saved` string[] in localStorage
-- [x] `useSignups` hook — manages `volunhub_signups` array, addSignup, cancelSignup, editNote, isSignedUp, getSignupCountForEvent
-- [x] `Saved` page (`/saved`) — shows saved events sorted by date, empty state message
-- [x] `EventCard` — remaining spots derived live from signups, shows "Event Full" in red when 0
-- [x] Placeholder pages — `Signups`, `Agenda` (render page name only)
+- [x] `Nav` — green navbar, NavLink active indicator, links to all 5 pages
+- [x] `Browse` (`/`) — event grid sorted by date, collapsible FilterBar with multi-select pill toggles
+- [x] `FilterBar` — search input + cause/location/type pill groups, active filter badge, "Clear all filters"
+- [x] `EventCard` — cause/type tags, title, org, location, date, time, remaining spots (derived live), "Event Full" in red
+- [x] `EventDetail` (`/events/:id`) — full info, working Save + Sign Up buttons, inline note form, remaining spots derived, back uses `navigate(-1)`
+- [x] `useSaved` + Save button — toggles ♡/♥, persists across navigation
+- [x] `useSignups` + Sign Up flow — inline note form, confirm button, cancels from detail page, spots update everywhere
+- [x] `Saved` (`/saved`) — saved events sorted by date, empty state message
+- [x] `Signups` (`/signups`) — list view sorted by date, cancel with inline confirm (Yes/No), shows note if present. **Edit Note NOT yet implemented.**
 
 ---
 
 ## In Progress
 
-**Step 8 — Signups Page**
-- List view of all signed-up events, cancel + edit note
+**Step 8.2 — Edit Note on Signups page**
+- Add "Edit Note" button per signup item on `/signups`
+- Clicking opens an inline textarea pre-filled with current note
+- Save button calls `editNote(eventId, newNote)` from `useSignups`
+- Cancel button dismisses without saving
+- Note: `editNote` is already implemented in `useSignups` hook — just needs to be wired into the UI
 
 ---
 
@@ -47,14 +51,35 @@ The app is scaffolded, deployed, and mid-development. MVP features are being bui
 
 | Step | Feature | Status |
 |------|---------|--------|
-| 8 | Signups page — list view, cancel, edit note | 🔲 Not started |
-| 9 | Agenda page — date-grouped view, cancel | 🔲 Not started |
-| 10 | Styling pass — colors, fonts, images, polish | 🔲 Not started |
+| 8.2 | Edit Note on Signups page | 🔲 Not started |
+| 9 | Agenda page — date-grouped view of signups, cancel with confirm | 🔲 Not started |
+| 10 | Styling pass — polish, fonts, images, mobile check | 🔲 Not started |
 
-### Notes on remaining steps
-- **Step 7**: Sign up button on EventDetail opens a small inline form (optional note). Spots available will become derived: `event.spotsAvailable - signups.filter(s => s.eventId === id).length`
-- **Steps 8 & 9**: Both use the same `useSignups` hook — no duplicated logic. Signups = list view, Agenda = date-grouped view.
-- **Step 10**: Styling pass includes adding event images (requires adding an `imageUrl` field to `events.json`), font choices, color refinements, and mobile responsiveness check.
+### Step 9 — Agenda Page Notes
+- Path: `/agenda`
+- Uses same `useSignups` hook (no new hook needed)
+- Groups signed-up events by date (e.g. "April 5, 2026" → list of events that day)
+- Each event shows same info as Signups page
+- Cancel with inline confirm (same pattern as Signups page — reuse `confirmingId` state pattern)
+- Shared helper for grouping by date:
+  ```js
+  // Group signedUpEvents by event.date
+  const grouped = signedUpEvents.reduce((acc, item) => {
+    const key = item.event.date
+    if (!acc[key]) acc[key] = []
+    acc[key].push(item)
+    return acc
+  }, {})
+  const sortedDates = Object.keys(grouped).sort()
+  ```
+
+### Step 10 — Styling Pass Notes
+- Add `imageUrl` field to each event in `events.json` (use placeholder image URLs or a consistent source)
+- Display image at top of `EventDetail` card
+- Font refinement (currently uses system-ui)
+- Color palette is already established: green `#2e7d32`, purple `#5e35b1`, red `#c62828`, bg `#f4f6f9`
+- Mobile responsiveness check (Nav, FilterBar pills, EventCard grid, EventDetail meta grid)
+- Update back button label dynamically (currently says "← Back" — acceptable for now)
 
 ---
 
@@ -70,6 +95,48 @@ These features require Supabase and will be planned in detail once MVP is comple
 
 ---
 
+## Important Patterns & Conventions
+
+### localStorage Keys
+| Key | Type | Description |
+|-----|------|-------------|
+| `volunhub_events` | `Event[]` | Seeded from events.json, never mutated after seed |
+| `volunhub_saved` | `string[]` | Array of saved event IDs |
+| `volunhub_signups` | `Signup[]` | `{ id, eventId, createdAt, note }` |
+| `volunhub_preferences` | `object` | `{ causes: [], locations: [], types: [] }` (groundwork for Complete Tier) |
+
+### Remaining Spots (always derived, never stored)
+```js
+const remaining = event.spotsAvailable - getSignupCountForEvent(event.id)
+```
+
+### Inline Confirmation Pattern (used in Signups, reuse in Agenda)
+```jsx
+const [confirmingId, setConfirmingId] = useState(null)
+
+// In JSX:
+{confirmingId === signup.id ? (
+  <div className="cancel-confirm">
+    <p className="cancel-confirm-text">Cancel signup?</p>
+    <div className="cancel-confirm-btns">
+      <button className="btn-confirm-yes" onClick={() => { cancelSignup(event.id); setConfirmingId(null) }}>Yes</button>
+      <button className="btn-confirm-no" onClick={() => setConfirmingId(null)}>No</button>
+    </div>
+  </div>
+) : (
+  <button className="btn-cancel-signup" onClick={() => setConfirmingId(signup.id)}>Cancel Signup</button>
+)}
+```
+
+### Shared CSS Classes (defined in multiple files — be aware of duplication)
+- `.cause-tag`, `.type-tag` — defined in `EventCard.css`, `EventDetail.css`, `Signups.css`
+- `.page-title`, `.page-subtitle` — defined in `Browse.css`, reused via same class name in `Saved.css`, `Signups.css`
+- `.empty-state` — defined in `Saved.css` and `Signups.css`
+- These could be consolidated into a global stylesheet during the Step 10 styling pass
+
+---
+
 ## Known Issues / Notes
 - LF/CRLF warnings on every git commit — harmless on Windows, no action needed
-- `volunhub_events` in localStorage is seeded once on first load. If `events.json` is updated, users need to clear localStorage manually to re-seed (or we add a version/reset mechanism later)
+- `volunhub_events` seeded once on first load. If `events.json` is updated, clear localStorage manually to re-seed
+- Shared CSS classes are duplicated across component/page CSS files — consolidate during styling pass
