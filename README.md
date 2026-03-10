@@ -1,16 +1,18 @@
-# React + Vite
+# VolunHub
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A volunteering event finder and tracker app. Allows users to easily find and sign up for volunteering events.
 
-Currently, two official plugins are available:
+## Planned Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Browse & view events** — Explore available volunteering events and view full event details
+- **Search & filter** — Filter events by cause, location, date, and type
+- **Save events** — Bookmark events to a personal favorites list for later
+- **Sign up & manage** — Register for events and manage your signups in one place
+- **Agenda view** — See all signed-up events in a date-grouped agenda view
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **Frontend:** React + Vite
+- **Styling:** Plain CSS
+- **Deployment:** Netlify
+- **Backend (Complete Tier):** Supabase Auth + Supabase Database
