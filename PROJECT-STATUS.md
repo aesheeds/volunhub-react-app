@@ -27,19 +27,19 @@ The app is scaffolded, deployed, and mid-development. MVP features are being bui
 - [x] `Browse` page (`/`) — event grid sorted by date, search + multi-select filter bar
 - [x] `EventCard` component — shows title, org, cause tag, type tag, location, date, time, spots
 - [x] `FilterBar` component — collapsible panel, multi-select pill toggles for cause/location/type, active filter badge, clear all
-- [x] `EventDetail` page (`/events/:id`) — full event info, meta grid, working Save button, placeholder Sign Up button. Back button uses `navigate(-1)`.
+- [x] `EventDetail` page (`/events/:id`) — full event info, meta grid, working Save + Sign Up buttons. Remaining spots derived live. Back button uses `navigate(-1)`.
 - [x] `useSaved` hook — manages `volunhub_saved` string[] in localStorage
+- [x] `useSignups` hook — manages `volunhub_signups` array, addSignup, cancelSignup, editNote, isSignedUp, getSignupCountForEvent
 - [x] `Saved` page (`/saved`) — shows saved events sorted by date, empty state message
+- [x] `EventCard` — remaining spots derived live from signups, shows "Event Full" in red when 0
 - [x] Placeholder pages — `Signups`, `Agenda` (render page name only)
 
 ---
 
 ## In Progress
 
-**Step 7 — Sign Up**
-- Next immediate task: create `useSignups` hook (`volunhub_signups: Signup[]`)
-- Then: wire Sign Up button on EventDetail (with optional note input)
-- Then: derive remaining spots from signups count
+**Step 8 — Signups Page**
+- List view of all signed-up events, cancel + edit note
 
 ---
 
@@ -47,7 +47,6 @@ The app is scaffolded, deployed, and mid-development. MVP features are being bui
 
 | Step | Feature | Status |
 |------|---------|--------|
-| 7 | Sign Up from EventDetail (`useSignups` hook) | 🔲 Not started |
 | 8 | Signups page — list view, cancel, edit note | 🔲 Not started |
 | 9 | Agenda page — date-grouped view, cancel | 🔲 Not started |
 | 10 | Styling pass — colors, fonts, images, polish | 🔲 Not started |

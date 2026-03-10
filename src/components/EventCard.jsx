@@ -1,8 +1,12 @@
 import { useNavigate } from 'react-router-dom'
+import useSignups from '../hooks/useSignups'
 import './EventCard.css'
 
 function EventCard({ event }) {
   const navigate = useNavigate()
+  const { getSignupCountForEvent } = useSignups()
+
+  const remainingSpots = event.spotsAvailable - getSignupCountForEvent(event.id)
 
   return (
     <div className="event-card" onClick={() => navigate(`/events/${event.id}`)}>
@@ -17,7 +21,9 @@ function EventCard({ event }) {
         <span>📅 {new Date(event.date + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
         <span>🕐 {event.time}</span>
       </div>
-      <p className="event-spots">{event.spotsAvailable} spots available</p>
+      <p className="event-spots" style={remainingSpots === 0 ? { color: '#c62828' } : {}}>
+        {remainingSpots === 0 ? 'Event Full' : `${remainingSpots} spots available`}
+      </p>
     </div>
   )
 }
