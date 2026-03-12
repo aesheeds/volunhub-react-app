@@ -32,18 +32,16 @@ The app is mid-development. Most MVP features are complete. Currently finishing 
 - [x] `useSaved` + Save button — toggles ♡/♥, persists across navigation
 - [x] `useSignups` + Sign Up flow — inline note form, confirm button, cancels from detail page, spots update everywhere
 - [x] `Saved` (`/saved`) — saved events sorted by date, empty state message
-- [x] `Signups` (`/signups`) — list view sorted by date, cancel with inline confirm (Yes/No), shows note if present. **Edit Note NOT yet implemented.**
+- [x] `Signups` (`/signups`) — list view sorted by date, cancel with inline confirm (Yes/No), shows note if present, Edit Note with inline textarea (opens in place of note, Save/Cancel below textarea, state conflicts guarded)
+- [x] `Agenda` (`/agenda`) — date-grouped view of signups, date headers in green, click-to-navigate, note display. Cancel not yet added (9.2).
 
 ---
 
 ## In Progress
 
-**Step 8.2 — Edit Note on Signups page**
-- Add "Edit Note" button per signup item on `/signups`
-- Clicking opens an inline textarea pre-filled with current note
-- Save button calls `editNote(eventId, newNote)` from `useSignups`
-- Cancel button dismisses without saving
-- Note: `editNote` is already implemented in `useSignups` hook — just needs to be wired into the UI
+**Step 9 — Agenda page**
+- 9.1 ✅ Scaffold + grouped data display (date headers, event cards, click-to-navigate, note display)
+- 9.2 🔲 Cancel Signup with inline confirm
 
 ---
 
@@ -51,8 +49,9 @@ The app is mid-development. Most MVP features are complete. Currently finishing 
 
 | Step | Feature | Status |
 |------|---------|--------|
-| 8.2 | Edit Note on Signups page | 🔲 Not started |
-| 9 | Agenda page — date-grouped view of signups, cancel with confirm | 🔲 Not started |
+| 8.2 | Edit Note on Signups page | ✅ Done |
+| 9.1 | Agenda — scaffold + grouped data display | ✅ Done |
+| 9.2 | Agenda — Cancel Signup with inline confirm | 🔲 Not started |
 | 10 | Styling pass — polish, fonts, images, mobile check | 🔲 Not started |
 
 ### Step 9 — Agenda Page Notes

@@ -7,8 +7,10 @@ import './Signups.css'
 function Signups() {
   const navigate = useNavigate()
   const [events] = useLocalStorage('volunhub_events', [])
-  const { signups, cancelSignup } = useSignups()
+  const { signups, cancelSignup, editNote } = useSignups()
   const [confirmingId, setConfirmingId] = useState(null)
+  const [editingId, setEditingId] = useState(null)
+  const [editText, setEditText] = useState('')
 
   const signedUpEvents = signups
     .map(signup => ({
@@ -21,6 +23,7 @@ function Signups() {
   function handleCancel(eventId) {
     cancelSignup(eventId)
     setConfirmingId(null)
+    setEditingId(null)
   }
 
   return (
@@ -44,12 +47,28 @@ function Signups() {
                     <span>📅 {new Date(event.date + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
                     <span>🕐 {event.time}</span>
                   </div>
-                  {signup.note && (
+                  {editingId === signup.id ? (
+                    <div className="edit-note-form" onClick={e => e.stopPropagation()}>
+                      <textarea
+                        className="edit-note-textarea"
+                        value={editText}
+                        onChange={e => setEditText(e.target.value)}
+                        rows={3}
+                        placeholder="Add a note..."
+                        autoFocus
+                      />
+                      <div className="edit-note-btns">
+                        <button className="btn-save-note" onClick={() => { editNote(event.id, editText); setEditingId(null) }}>Save</button>
+                        <button className="btn-cancel-edit" onClick={() => setEditingId(null)}>Cancel</button>
+                      </div>
+                    </div>
+                  ) : signup.note ? (
                     <p className="signup-note">📝 {signup.note}</p>
-                  )}
+                  ) : null}
                 </div>
                 <div className="signup-item-actions">
-                  {confirmingId === signup.id ? (
+                  {editingId === signup.id ? null
+                  : confirmingId === signup.id ? (
                     <div className="cancel-confirm">
                       <p className="cancel-confirm-text">Cancel signup?</p>
                       <div className="cancel-confirm-btns">
@@ -58,9 +77,14 @@ function Signups() {
                       </div>
                     </div>
                   ) : (
-                    <button className="btn-cancel-signup" onClick={() => setConfirmingId(signup.id)}>
-                      Cancel Signup
-                    </button>
+                    <>
+                      <button className="btn-edit-note" onClick={() => { setEditingId(signup.id); setEditText(signup.note || ''); setConfirmingId(null) }}>
+                        Edit Note
+                      </button>
+                      <button className="btn-cancel-signup" onClick={() => { setConfirmingId(signup.id); setEditingId(null) }}>
+                        Cancel Signup
+                      </button>
+                    </>
                   )}
                 </div>
               </div>
