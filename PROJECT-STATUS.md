@@ -33,15 +33,13 @@ The app is mid-development. Most MVP features are complete. Currently finishing 
 - [x] `useSignups` + Sign Up flow — inline note form, confirm button, cancels from detail page, spots update everywhere
 - [x] `Saved` (`/saved`) — saved events sorted by date, empty state message
 - [x] `Signups` (`/signups`) — list view sorted by date, cancel with inline confirm (Yes/No), shows note if present, Edit Note with inline textarea (opens in place of note, Save/Cancel below textarea, state conflicts guarded)
-- [x] `Agenda` (`/agenda`) — date-grouped view of signups, date headers in green, click-to-navigate, note display. Cancel not yet added (9.2).
+- [x] `Agenda` (`/agenda`) — weekly view with Prev/Next/This Week navigation, 7 day rows (Mon–Sun), Today badge, "X events this week" subtitle, Cancel Signup with inline confirm, timezone-safe date keys, confirm resets on week navigation
 
 ---
 
 ## In Progress
 
-**Step 9 — Agenda page**
-- 9.1 ✅ Scaffold + grouped data display (date headers, event cards, click-to-navigate, note display)
-- 9.2 🔲 Cancel Signup with inline confirm
+**Step 10 — Styling pass**
 
 ---
 
@@ -49,9 +47,7 @@ The app is mid-development. Most MVP features are complete. Currently finishing 
 
 | Step | Feature | Status |
 |------|---------|--------|
-| 8.2 | Edit Note on Signups page | ✅ Done |
-| 9.1 | Agenda — scaffold + grouped data display | ✅ Done |
-| 9.2 | Agenda — Cancel Signup with inline confirm | 🔲 Not started |
+| 9 | Agenda page — weekly view with navigation, cancel | ✅ Done |
 | 10 | Styling pass — polish, fonts, images, mobile check | 🔲 Not started |
 
 ### Step 9 — Agenda Page Notes
