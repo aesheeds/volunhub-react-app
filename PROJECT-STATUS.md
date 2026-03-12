@@ -1,7 +1,7 @@
 # VolunHub — Project Status
 
 ## Current State
-The app is mid-development. Most MVP features are complete. Currently finishing Step 8 (Signups page). The app is live on Netlify with continuous deployment from GitHub (main branch).
+All MVP pages are complete. Currently starting Step 10 (Styling pass). The app is live on Netlify with continuous deployment from GitHub (main branch).
 
 - **Local dev:** `npm run dev` → `http://localhost:5173`
 - **GitHub:** https://github.com/aesheeds/volunhub-react-app
@@ -49,24 +49,6 @@ The app is mid-development. Most MVP features are complete. Currently finishing 
 |------|---------|--------|
 | 9 | Agenda page — weekly view with navigation, cancel | ✅ Done |
 | 10 | Styling pass — polish, fonts, images, mobile check | 🔲 Not started |
-
-### Step 9 — Agenda Page Notes
-- Path: `/agenda`
-- Uses same `useSignups` hook (no new hook needed)
-- Groups signed-up events by date (e.g. "April 5, 2026" → list of events that day)
-- Each event shows same info as Signups page
-- Cancel with inline confirm (same pattern as Signups page — reuse `confirmingId` state pattern)
-- Shared helper for grouping by date:
-  ```js
-  // Group signedUpEvents by event.date
-  const grouped = signedUpEvents.reduce((acc, item) => {
-    const key = item.event.date
-    if (!acc[key]) acc[key] = []
-    acc[key].push(item)
-    return acc
-  }, {})
-  const sortedDates = Object.keys(grouped).sort()
-  ```
 
 ### Step 10 — Styling Pass Notes
 - Add `imageUrl` field to each event in `events.json` (use placeholder image URLs or a consistent source)
