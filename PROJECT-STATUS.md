@@ -39,36 +39,215 @@ All MVP pages are complete. Currently starting Step 10 (Styling pass). The app i
 
 ## In Progress
 
-**Step 10 — Styling pass**
+**Next up: Phase A — Supabase Auth (see plan below)**
 
 ---
 
-## Remaining MVP Steps
+## Step Tracker
 
 | Step | Feature | Status |
 |------|---------|--------|
 | 9 | Agenda page — weekly view with navigation, cancel | ✅ Done |
-| 10 | Styling pass — polish, fonts, images, mobile check | 🔲 Not started |
-
-### Step 10 — Styling Pass Notes
-- Add `imageUrl` field to each event in `events.json` (use placeholder image URLs or a consistent source)
-- Display image at top of `EventDetail` card
-- Font refinement (currently uses system-ui)
-- Color palette is already established: green `#2e7d32`, purple `#5e35b1`, red `#c62828`, bg `#f4f6f9`
-- Mobile responsiveness check (Nav, FilterBar pills, EventCard grid, EventDetail meta grid)
-- Update back button label dynamically (currently says "← Back" — acceptable for now)
+| 10 | Styling pass — polish, fonts, images, mobile check | 🔲 Deferred until after auth |
+| A1 | Supabase project setup + SDK install | 🔲 Not started |
+| A2 | Login + Sign Up pages | 🔲 Not started |
+| A3 | `useAuth` hook | 🔲 Not started |
+| A4 | Session persistence in `App.jsx` | 🔲 Not started |
+| A5 | `ProtectedRoute` component | 🔲 Not started |
+| A6 | Apply protected routes | 🔲 Not started |
+| A7 | Update Nav for auth state | 🔲 Not started |
+| B1 | Create Supabase tables + schema | 🔲 Not started |
+| B2 | Row Level Security (RLS) policies | 🔲 Not started |
+| B3 | Migrate `useSignups` → Supabase | 🔲 Not started |
+| B4 | Migrate `useSaved` → Supabase | 🔲 Not started |
+| B5 | Test data isolation between users | 🔲 Not started |
+| C1 | Profile page — display + edit preferences | 🔲 Not started |
+| C2 | Save preferences to `profiles` table | 🔲 Not started |
+| C3 | Home page — recommended events by preference | 🔲 Not started |
+| C4 | Routing — Browse for guests, Home for logged-in | 🔲 Not started |
+| D1 | Style auth pages to match VolunHub design | 🔲 Not started |
+| D2 | Loading states for async Supabase calls | 🔲 Not started |
+| D3 | Error handling — wrong password, email taken, etc. | 🔲 Not started |
+| D4 | Step 10 styling pass (fonts, images, mobile) | 🔲 Not started |
 
 ---
 
-## Complete Tier (Later — after MVP is finished)
+## Full Plan: Auth + Cloud DB + Profile
 
-These features require Supabase and will be planned in detail once MVP is complete.
+### Technology Choice: Supabase
+- **Why Supabase:** Gives both Auth AND a Postgres database in one place. Row Level Security (RLS) handles per-user data isolation cleanly. Free tier is generous. Already planned in original architecture.
+- **Install:** `npm install @supabase/supabase-js`
+- **Client file:** `src/lib/supabase.js` — create the Supabase client, export it, import everywhere needed
 
-- [ ] Supabase Auth — user sign up / login / logout
-- [ ] Supabase Database — migrate events, signups, and saved data from localStorage to cloud
-- [ ] User profiles — personal info, volunteering preferences (causes, locations, types), skills
-- [ ] Preferences stored in `volunhub_preferences` localStorage key (already planned in data model as groundwork)
-- [ ] Home page for signed-in users — recommended events based on saved preferences
+### Access Rules
+- **Public (no login needed):** Browse (`/`), EventDetail (`/events/:id`)
+- **Protected (login required):** Saved (`/saved`), Signups (`/signups`), Agenda (`/agenda`), Profile (`/profile`), Home (`/home`)
+- Users without an account can browse and view events but cannot save or sign up
+
+---
+
+### Phase A — Supabase Auth
+
+**A1 — Supabase Setup**
+- Create project at supabase.com
+- Copy `SUPABASE_URL` and `SUPABASE_ANON_KEY` into `.env` as `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY`
+- Add `.env` to `.gitignore` (critical — never commit keys)
+- Create `src/lib/supabase.js`:
+```js
+import { createClient } from '@supabase/supabase-js'
+export const supabase = createClient(
+  import.meta.env.VITE_SUPABASE_URL,
+  import.meta.env.VITE_SUPABASE_ANON_KEY
+)
+```
+- Set env vars in Netlify dashboard too (Settings → Environment Variables)
+
+**A2 — Login + Sign Up Pages**
+- `src/pages/Login.jsx` + `Login.css` — email/password form, link to sign up
+- `src/pages/SignUp.jsx` + `SignUp.css` — email/password form, link to login
+- Both use `supabase.auth.signInWithPassword()` and `supabase.auth.signUp()`
+- On success: `navigate('/')` (or `/home` once that exists)
+- Style to match VolunHub design (green primary button, `#f4f6f9` background)
+
+**A3 — `useAuth` Hook**
+- `src/hooks/useAuth.js`
+- Returns: `{ user, loading, signIn(email, pw), signUp(email, pw), signOut() }`
+- Uses `supabase.auth.getSession()` on mount + `supabase.auth.onAuthStateChange()` listener
+
+**A4 — Session Persistence in `App.jsx`**
+- Supabase stores the session in localStorage automatically
+- `onAuthStateChange` in `useAuth` keeps `user` state in sync on refresh
+- No extra work needed beyond wiring up the hook
+
+**A5 — `ProtectedRoute` Component**
+- `src/components/ProtectedRoute.jsx`
+- If `loading`: show spinner/null
+- If no `user`: `<Navigate to="/login" />`
+- Otherwise: render `children`
+```jsx
+function ProtectedRoute({ children }) {
+  const { user, loading } = useAuth()
+  if (loading) return null
+  if (!user) return <Navigate to="/login" replace />
+  return children
+}
+```
+
+**A6 — Apply Protected Routes**
+- Wrap `/saved`, `/signups`, `/agenda`, `/profile` in `<ProtectedRoute>` in `App.jsx`
+- Add `/login` and `/signup` routes
+
+**A7 — Update Nav**
+- If logged out: show "Login" button (navigates to `/login`)
+- If logged in: show user's email (or display name) + "Logout" button
+- Logout calls `supabase.auth.signOut()` then `navigate('/')`
+
+---
+
+### Phase B — Cloud Database Migration
+
+**B1 — Supabase Tables**
+
+`profiles` table:
+```sql
+id uuid references auth.users primary key,
+email text,
+display_name text,
+preferred_causes text[],
+preferred_locations text[],
+preferred_types text[],
+created_at timestamptz default now()
+```
+
+`signups` table:
+```sql
+id uuid primary key default gen_random_uuid(),
+user_id uuid references auth.users not null,
+event_id text not null,
+note text,
+created_at timestamptz default now()
+```
+
+`saved_events` table:
+```sql
+id uuid primary key default gen_random_uuid(),
+user_id uuid references auth.users not null,
+event_id text not null,
+created_at timestamptz default now()
+```
+
+**B2 — Row Level Security (RLS)**
+- Enable RLS on all three tables
+- Policy for each: `user_id = auth.uid()` for SELECT, INSERT, UPDATE, DELETE
+- This means users can only ever see and modify their own rows
+
+**B3 — Rewrite `useSignups`**
+- All functions become async (use `await supabase.from('signups')...`)
+- Add `loading` state
+- `addSignup(eventId, note)` → insert row with `user_id: user.id`
+- `cancelSignup(eventId)` → delete where `event_id = eventId AND user_id = user.id`
+- `editNote(eventId, note)` → update where `event_id = eventId AND user_id = user.id`
+- `isSignedUp(eventId)` → check local state (loaded once on mount)
+- `getSignupCountForEvent(eventId)` → still derived from local state (all signups loaded on mount)
+  - **Note:** This means signup counts are global — all users' signups count toward spots. This is correct behavior.
+
+**B4 — Rewrite `useSaved`**
+- Same pattern as useSignups
+- `toggleSaved(eventId)` → insert or delete row
+- `isSaved(eventId)` → check local state
+
+**B5 — Test Data Isolation**
+- Create two test accounts
+- Sign up for events with each
+- Confirm `/signups` and `/saved` only show that user's data
+
+---
+
+### Phase C — Profile & Home Page
+
+**C1–C2 — Profile Page**
+- `src/pages/Profile.jsx` + `Profile.css`
+- On load: fetch from `profiles` table where `id = user.id`
+- If no profile row yet (new user): create one on first save (upsert)
+- Shows: email (read-only), display name (editable), preference pills (causes, locations, types — same pill UI as FilterBar)
+- Save button: `supabase.from('profiles').upsert(...)`
+
+**C3–C4 — Home Page**
+- `src/pages/Home.jsx` + `Home.css`
+- Load user's profile preferences
+- Filter `events.json` by matching causes/locations/types
+- If no preferences set: show "Update your profile to get recommendations" + link to `/profile`
+- If preferences set: show matching events in same EventCard grid as Browse
+- Routing: guests hit `/` (Browse), logged-in users are redirected to `/home`
+  - Or: keep `/` as Browse for everyone and add `/home` as an extra page in Nav for logged-in users (simpler, less disruptive)
+
+---
+
+### Phase D — Polish
+
+**D1 — Style auth pages** to match existing design (green buttons, same font/background)
+
+**D2 — Loading states** — while Supabase fetches data, show a spinner or skeleton. All pages that use `useSignups` or `useSaved` will need a `loading` check.
+
+**D3 — Error handling** — display user-friendly messages for:
+- Wrong password / email not found
+- Email already registered
+- Network errors on save/signup
+
+**D4 — Original styling pass** (Step 10):
+- Add `imageUrl` to `events.json`, display on EventDetail
+- Font refinement, mobile responsiveness check
+
+---
+
+### Key Things to Know
+
+1. **`.env` file** — never commit it. Add to `.gitignore` before creating it. Set the same vars in Netlify dashboard.
+2. **Async hooks** — the biggest change. `useSignups` and `useSaved` will return `loading: true` initially. Every page using them needs a loading guard before rendering.
+3. **`getSignupCountForEvent` still works** — because we load ALL signups on mount (not just the current user's), the remaining spots count stays global and correct.
+4. **Events stay in `events.json`** — no need to move events to Supabase. They're static seed data. Only user-specific data (signups, saved, profiles) moves to the cloud.
+5. **Supabase profile row** — created on first profile save, not on sign-up. Use `upsert` so it works for both create and update.
+6. **`useLocalStorage` hook** — still used for `volunhub_events` seeding. Can be kept as-is.
 
 ---
 
