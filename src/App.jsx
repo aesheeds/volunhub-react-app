@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Nav from './components/Nav'
 import Browse from './pages/Browse'
@@ -6,16 +5,17 @@ import EventDetail from './pages/EventDetail'
 import Saved from './pages/Saved'
 import Signups from './pages/Signups'
 import Agenda from './pages/Agenda'
+import Login from './pages/Login'
+import SignUp from './pages/SignUp'
+import ProtectedRoute from './components/ProtectedRoute'
 import eventsData from './data/events.json'
 import './App.css'
 
-function App() {
-  useEffect(() => {
-    if (!localStorage.getItem('volunhub_events')) {
-      localStorage.setItem('volunhub_events', JSON.stringify(eventsData))
-    }
-  }, [])
+if (!localStorage.getItem('volunhub_events')) {
+  localStorage.setItem('volunhub_events', JSON.stringify(eventsData))
+}
 
+function App() {
   return (
     <BrowserRouter>
       <Nav />
@@ -23,9 +23,11 @@ function App() {
         <Routes>
           <Route path="/" element={<Browse />} />
           <Route path="/events/:id" element={<EventDetail />} />
-          <Route path="/saved" element={<Saved />} />
-          <Route path="/signups" element={<Signups />} />
-          <Route path="/agenda" element={<Agenda />} />
+          <Route path="/saved" element={<ProtectedRoute><Saved /></ProtectedRoute>} />
+          <Route path="/signups" element={<ProtectedRoute><Signups /></ProtectedRoute>} />
+          <Route path="/agenda" element={<ProtectedRoute><Agenda /></ProtectedRoute>} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} />
         </Routes>
       </main>
     </BrowserRouter>

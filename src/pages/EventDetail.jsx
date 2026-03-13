@@ -3,12 +3,14 @@ import { useParams, useNavigate } from 'react-router-dom'
 import useLocalStorage from '../hooks/useLocalStorage'
 import useSaved from '../hooks/useSaved'
 import useSignups from '../hooks/useSignups'
+import { useAuth } from '../hooks/useAuth'
 import './EventDetail.css'
 
 function EventDetail() {
   const { id } = useParams()
   const navigate = useNavigate()
   const [events] = useLocalStorage('volunhub_events', [])
+  const { user } = useAuth()
   const { isSaved, toggleSaved } = useSaved()
   const { isSignedUp, addSignup, cancelSignup, getSignupCountForEvent } = useSignups()
   const [showForm, setShowForm] = useState(false)
@@ -76,7 +78,7 @@ function EventDetail() {
         <div className="detail-actions">
           <button
             className={`btn-save ${isSaved(event.id) ? 'saved' : ''}`}
-            onClick={() => toggleSaved(event.id)}
+            onClick={() => user ? toggleSaved(event.id) : navigate('/login')}
           >
             {isSaved(event.id) ? '♥ Saved' : '♡ Save Event'}
           </button>
@@ -88,7 +90,7 @@ function EventDetail() {
           ) : (
             <button
               className="btn-signup"
-              onClick={() => setShowForm(prev => !prev)}
+              onClick={() => user ? setShowForm(prev => !prev) : navigate('/login')}
               disabled={full}
             >
               {full ? 'Event Full' : 'Sign Up'}

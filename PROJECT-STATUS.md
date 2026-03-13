@@ -1,7 +1,9 @@
 # VolunHub — Project Status
 
 ## Current State
-All MVP pages are complete. Currently starting Step 10 (Styling pass). The app is live on Netlify with continuous deployment from GitHub (main branch).
+Phase A (Supabase Auth) is complete. Next up is Phase B (Cloud Database Migration — move signups + saved to Supabase). The app is live on Netlify with continuous deployment from GitHub (main branch).
+
+**⚠️ Remember before final submission:** Re-enable email confirmation in Supabase (Authentication → Providers → Email → "Confirm email"). Currently disabled for dev to avoid rate limits.
 
 - **Local dev:** `npm run dev` → `http://localhost:5173`
 - **GitHub:** https://github.com/aesheeds/volunhub-react-app
@@ -24,11 +26,11 @@ All MVP pages are complete. Currently starting Step 10 (Styling pass). The app i
 - [x] `useSignups` hook — manages `volunhub_signups: Signup[]`, exposes: `isSignedUp`, `getSignup`, `addSignup`, `cancelSignup`, `editNote`, `getSignupCountForEvent`
 
 ### Pages & Components
-- [x] `Nav` — green navbar, NavLink active indicator, links to all 5 pages
+- [x] `Nav` — auth-aware navbar: Browse always visible; Saved/My Signups/Agenda/Profile only when logged in; Log In button for guests; Log Out button (temporary, moves to Profile in C1); mobile hamburger menu (simple, to be polished in D4)
 - [x] `Browse` (`/`) — event grid sorted by date, collapsible FilterBar with multi-select pill toggles
 - [x] `FilterBar` — search input + cause/location/type pill groups, active filter badge, "Clear all filters"
 - [x] `EventCard` — cause/type tags, title, org, location, date, time, remaining spots (derived live), "Event Full" in red
-- [x] `EventDetail` (`/events/:id`) — full info, working Save + Sign Up buttons, inline note form, remaining spots derived, back uses `navigate(-1)`
+- [x] `EventDetail` (`/events/:id`) — full info, Save + Sign Up buttons (redirect to /login if guest), inline note form, remaining spots derived, back uses `navigate(-1)`
 - [x] `useSaved` + Save button — toggles ♡/♥, persists across navigation
 - [x] `useSignups` + Sign Up flow — inline note form, confirm button, cancels from detail page, spots update everywhere
 - [x] `Saved` (`/saved`) — saved events sorted by date, empty state message
@@ -37,9 +39,19 @@ All MVP pages are complete. Currently starting Step 10 (Styling pass). The app i
 
 ---
 
+### Auth (Phase A — Complete)
+- [x] `src/lib/supabase.js` — Supabase client, reads from `.env` (`VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`)
+- [x] `useAuth` hook — `user`, `loading`, `signIn`, `signUp`, `signOut`, `resendConfirmation`
+- [x] `Login` page (`/login`) — email/password form, error display, loading state
+- [x] `SignUp` page (`/signup`) — email/password/confirm form, regex validation (number + special char), "Check your email" screen with resend button
+- [x] `ProtectedRoute` — redirects guests to `/login`, loading guard prevents flash
+- [x] Protected routes: `/saved`, `/signups`, `/agenda` (profile to be added in C1)
+- [x] Session persistence — handled automatically by Supabase localStorage
+- [x] Seed fix — moved to module level so Browse loads events on first visit without refresh
+
 ## In Progress
 
-**Next up: Phase A — Supabase Auth (see plan below)**
+**Next up: Phase B — Cloud Database Migration**
 
 ---
 
@@ -49,13 +61,13 @@ All MVP pages are complete. Currently starting Step 10 (Styling pass). The app i
 |------|---------|--------|
 | 9 | Agenda page — weekly view with navigation, cancel | ✅ Done |
 | 10 | Styling pass — polish, fonts, images, mobile check | 🔲 Deferred until after auth |
-| A1 | Supabase project setup + SDK install | 🔲 Not started |
-| A2 | Login + Sign Up pages | 🔲 Not started |
-| A3 | `useAuth` hook | 🔲 Not started |
-| A4 | Session persistence in `App.jsx` | 🔲 Not started |
-| A5 | `ProtectedRoute` component | 🔲 Not started |
-| A6 | Apply protected routes | 🔲 Not started |
-| A7 | Update Nav for auth state | 🔲 Not started |
+| A1 | Supabase project setup + SDK install | ✅ Done |
+| A2 | Login + Sign Up pages | ✅ Done |
+| A3 | `useAuth` hook | ✅ Done |
+| A4 | Session persistence in `App.jsx` | ✅ Done (automatic) |
+| A5 | `ProtectedRoute` component | ✅ Done |
+| A6 | Apply protected routes | ✅ Done |
+| A7 | Update Nav for auth state | ✅ Done |
 | B1 | Create Supabase tables + schema | 🔲 Not started |
 | B2 | Row Level Security (RLS) policies | 🔲 Not started |
 | B3 | Migrate `useSignups` → Supabase | 🔲 Not started |

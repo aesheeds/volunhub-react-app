@@ -1,0 +1,73 @@
+import { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { useAuth } from '../hooks/useAuth'
+import './Login.css'
+
+function Login() {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState(null)
+  const [loading, setLoading] = useState(false)
+  const { signIn } = useAuth()
+  const navigate = useNavigate()
+
+  async function handleSubmit(e) {
+    e.preventDefault()
+    setError(null)
+    setLoading(true)
+    try {
+      await signIn(email, password)
+      navigate('/')
+    } catch (err) {
+      setError(err.message)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  return (
+    <div className="auth-container">
+      <div className="auth-card">
+        <h1 className="auth-title">Welcome back</h1>
+        <p className="auth-subtitle">Log in to your VolunHub account</p>
+
+        {error && <p className="auth-error">{error}</p>}
+
+        <form onSubmit={handleSubmit} className="auth-form">
+          <label className="auth-label">
+            Email
+            <input
+              type="email"
+              className="auth-input"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              required
+              autoFocus
+            />
+          </label>
+
+          <label className="auth-label">
+            Password
+            <input
+              type="password"
+              className="auth-input"
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              required
+            />
+          </label>
+
+          <button type="submit" className="auth-btn" disabled={loading}>
+            {loading ? 'Logging in...' : 'Log In'}
+          </button>
+        </form>
+
+        <p className="auth-switch">
+          Don't have an account? <Link to="/signup">Sign up</Link>
+        </p>
+      </div>
+    </div>
+  )
+}
+
+export default Login
