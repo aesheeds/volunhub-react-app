@@ -26,8 +26,8 @@ src/
 │   └── events.json       # 20 static seed events
 ├── hooks/
 │   ├── useLocalStorage.js  # Generic localStorage read/write hook
-│   ├── useSaved.js         # (planned) Manages volunhub_saved
-│   └── useSignups.js       # (planned) Manages volunhub_signups
+│   ├── useSaved.js         # Manages volunhub_saved
+│   └── useSignups.js       # Manages volunhub_signups
 ├── components/
 │   ├── Nav.jsx / Nav.css
 │   ├── EventCard.jsx / EventCard.css
@@ -35,9 +35,9 @@ src/
 └── pages/
     ├── Browse.jsx / Browse.css
     ├── EventDetail.jsx / EventDetail.css
-    ├── Saved.jsx           # (placeholder)
-    ├── Signups.jsx         # (placeholder)
-    └── Agenda.jsx          # (placeholder)
+    ├── Saved.jsx / Saved.css
+    ├── Signups.jsx / Signups.css
+    └── Agenda.jsx / Agenda.css
 ```
 
 ---
@@ -50,7 +50,7 @@ src/
 | `/events/:id` | `EventDetail` | Full event details, save + sign up actions |
 | `/saved` | `Saved` | User's saved/favorited events |
 | `/signups` | `Signups` | List view of signed-up events, cancel + edit note |
-| `/agenda` | `Agenda` | Signed-up events grouped by date, cancel |
+| `/agenda` | `Agenda` | Weekly view of signed-up events with Prev/Next/This Week navigation, cancel |
 
 ---
 
@@ -120,7 +120,7 @@ On first load, `App.jsx` checks if `volunhub_events` exists in localStorage. If 
 - A version/reset mechanism can be added later if needed
 
 ### Back Navigation
-The back button on `EventDetail` currently navigates to `/` (Browse). This should be updated to `navigate(-1)` during the styling pass so it works correctly when navigating from the Saved page.
+`EventDetail` uses `navigate(-1)` so the back button works correctly regardless of which page the user navigated from (Browse, Saved, etc.).
 
 ---
 
@@ -134,10 +134,10 @@ const [value, setValue] = useLocalStorage('my-key', defaultValue)
 setValue(prev => [...prev, newItem])
 ```
 
-### `useSaved()` — planned
+### `useSaved()`
 Returns: `{ savedIds, isSaved(id), toggleSaved(id) }`
 Manages `volunhub_saved` string array.
 
-### `useSignups()` — planned
-Returns: `{ signups, isSignedUp(eventId), addSignup(eventId, note), cancelSignup(eventId), editNote(eventId, note) }`
+### `useSignups()`
+Returns: `{ signups, isSignedUp(eventId), getSignup(eventId), addSignup(eventId, note), cancelSignup(eventId), editNote(eventId, note), getSignupCountForEvent(eventId) }`
 Manages `volunhub_signups` array. Single source of truth for both Signups and Agenda pages.
