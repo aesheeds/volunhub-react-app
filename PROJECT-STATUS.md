@@ -51,7 +51,7 @@ Phase A and Phase B (B1–B4) are complete. B5 (data isolation test) is next, th
 
 ## In Progress
 
-**Next up: B5 (data isolation test), then Phase C (Profile + Home)**
+**Next up: Phase C — Profile page + Home page with recommendations**
 
 ---
 
@@ -72,7 +72,7 @@ Phase A and Phase B (B1–B4) are complete. B5 (data isolation test) is next, th
 | B2 | Row Level Security (RLS) policies | ✅ Done |
 | B3 | Migrate `useSignups` → Supabase | ✅ Done |
 | B4 | Migrate `useSaved` → Supabase | ✅ Done |
-| B5 | Test data isolation between users | 🔲 Not started |
+| B5 | Test data isolation between users | ✅ Done |
 | C1 | Profile page — display + edit preferences | 🔲 Not started |
 | C2 | Save preferences to `profiles` table | 🔲 Not started |
 | C3 | Home page — recommended events by preference | 🔲 Not started |
