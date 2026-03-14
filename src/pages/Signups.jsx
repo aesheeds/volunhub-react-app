@@ -7,7 +7,7 @@ import './Signups.css'
 function Signups() {
   const navigate = useNavigate()
   const [events] = useLocalStorage('volunhub_events', [])
-  const { signups, cancelSignup, editNote } = useSignups()
+  const { signups, loading, cancelSignup, editNote } = useSignups()
   const [confirmingId, setConfirmingId] = useState(null)
   const [editingId, setEditingId] = useState(null)
   const [editText, setEditText] = useState('')
@@ -15,7 +15,7 @@ function Signups() {
   const signedUpEvents = signups
     .map(signup => ({
       signup,
-      event: events.find(e => e.id === signup.eventId)
+      event: events.find(e => e.id === signup.event_id)
     }))
     .filter(item => item.event)
     .sort((a, b) => new Date(a.event.date) - new Date(b.event.date))
@@ -25,6 +25,8 @@ function Signups() {
     setConfirmingId(null)
     setEditingId(null)
   }
+
+  if (loading) return <div className="page-loading">Loading...</div>
 
   return (
     <div>

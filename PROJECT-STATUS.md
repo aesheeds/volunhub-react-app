@@ -1,7 +1,7 @@
 # VolunHub — Project Status
 
 ## Current State
-Phase A (Supabase Auth) is complete. Next up is Phase B (Cloud Database Migration — move signups + saved to Supabase). The app is live on Netlify with continuous deployment from GitHub (main branch).
+Phase A and Phase B (B1–B4) are complete. B5 (data isolation test) is next, then Phase C (Profile + Home page). The app is live on Netlify with continuous deployment from GitHub (main branch).
 
 **⚠️ Remember before final submission:** Re-enable email confirmation in Supabase (Authentication → Providers → Email → "Confirm email"). Currently disabled for dev to avoid rate limits.
 
@@ -51,7 +51,7 @@ Phase A (Supabase Auth) is complete. Next up is Phase B (Cloud Database Migratio
 
 ## In Progress
 
-**Next up: Phase B — Cloud Database Migration**
+**Next up: B5 (data isolation test), then Phase C (Profile + Home)**
 
 ---
 
@@ -68,10 +68,10 @@ Phase A (Supabase Auth) is complete. Next up is Phase B (Cloud Database Migratio
 | A5 | `ProtectedRoute` component | ✅ Done |
 | A6 | Apply protected routes | ✅ Done |
 | A7 | Update Nav for auth state | ✅ Done |
-| B1 | Create Supabase tables + schema | 🔲 Not started |
-| B2 | Row Level Security (RLS) policies | 🔲 Not started |
-| B3 | Migrate `useSignups` → Supabase | 🔲 Not started |
-| B4 | Migrate `useSaved` → Supabase | 🔲 Not started |
+| B1 | Create Supabase tables + schema | ✅ Done |
+| B2 | Row Level Security (RLS) policies | ✅ Done |
+| B3 | Migrate `useSignups` → Supabase | ✅ Done |
+| B4 | Migrate `useSaved` → Supabase | ✅ Done |
 | B5 | Test data isolation between users | 🔲 Not started |
 | C1 | Profile page — display + edit preferences | 🔲 Not started |
 | C2 | Save preferences to `profiles` table | 🔲 Not started |

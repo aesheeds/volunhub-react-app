@@ -12,7 +12,7 @@ function EventDetail() {
   const [events] = useLocalStorage('volunhub_events', [])
   const { user } = useAuth()
   const { isSaved, toggleSaved } = useSaved()
-  const { isSignedUp, addSignup, cancelSignup, getSignupCountForEvent } = useSignups()
+  const { loading: signupsLoading, isSignedUp, addSignup, cancelSignup, getSignupCountForEvent } = useSignups()
   const [showForm, setShowForm] = useState(false)
   const [note, setNote] = useState('')
 
@@ -31,9 +31,9 @@ function EventDetail() {
     weekday: 'long', month: 'long', day: 'numeric', year: 'numeric'
   })
 
-  const remainingSpots = event.spotsAvailable - getSignupCountForEvent(event.id)
+  const remainingSpots = signupsLoading ? null : event.spotsAvailable - getSignupCountForEvent(event.id)
   const signedUp = isSignedUp(event.id)
-  const full = remainingSpots <= 0
+  const full = remainingSpots !== null && remainingSpots <= 0
 
   function handleConfirmSignup() {
     addSignup(event.id, note)
@@ -69,7 +69,7 @@ function EventDetail() {
           </div>
           <div className="meta-item">
             <span className="meta-label">Spots Available</span>
-            <span className={remainingSpots === 0 ? 'spots-full' : ''}>{remainingSpots}</span>
+            <span className={remainingSpots === 0 ? 'spots-full' : ''}>{signupsLoading ? '…' : remainingSpots}</span>
           </div>
         </div>
 

@@ -5,10 +5,12 @@ import './Saved.css'
 
 function Saved() {
   const [events] = useLocalStorage('volunhub_events', [])
-  const { savedIds } = useSaved()
+  const { savedIds, loading } = useSaved()
 
   const savedEvents = events.filter(e => savedIds.includes(e.id))
     .sort((a, b) => new Date(a.date) - new Date(b.date))
+
+  if (loading) return <div className="page-loading">Loading...</div>
 
   return (
     <div>

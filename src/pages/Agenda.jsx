@@ -37,7 +37,7 @@ function formatWeekRange(monday) {
 function Agenda() {
   const navigate = useNavigate()
   const [events] = useLocalStorage('volunhub_events', [])
-  const { signups, cancelSignup } = useSignups()
+  const { signups, loading, cancelSignup } = useSignups()
   const [confirmingId, setConfirmingId] = useState(null)
   const [weekStart, setWeekStart] = useState(() => getMonday(new Date()))
 
@@ -49,7 +49,7 @@ function Agenda() {
   const signedUpEvents = signups
     .map(signup => ({
       signup,
-      event: events.find(e => e.id === signup.eventId)
+      event: events.find(e => e.id === signup.event_id)
     }))
     .filter(item => item.event)
 
@@ -67,6 +67,8 @@ function Agenda() {
     cancelSignup(eventId)
     setConfirmingId(null)
   }
+
+  if (loading) return <div className="page-loading">Loading...</div>
 
   return (
     <div>

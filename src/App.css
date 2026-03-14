@@ -17,6 +17,13 @@ body {
   min-height: 100vh;
 }
 
+.page-loading {
+  text-align: center;
+  padding: 3rem;
+  color: #666;
+  font-size: 1rem;
+}
+
 .page-content {
   max-width: 900px;
   width: 100%;
