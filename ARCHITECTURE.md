@@ -7,9 +7,9 @@
 | Frontend framework | React 19 + Vite |
 | Routing | react-router-dom v7 |
 | Styling | Plain CSS (per-component files) |
-| Storage (MVP) | localStorage |
-| Storage (Complete Tier) | Supabase Database |
-| Auth (Complete Tier) | Supabase Auth |
+| Auth | Supabase Auth |
+| Database | Supabase (Postgres) |
+| Static data | localStorage (events only) |
 | Deployment | Netlify (auto-deploy from GitHub main) |
 
 ---
@@ -18,87 +18,112 @@
 
 ```
 src/
-├── App.jsx               # Router setup, seed logic
+├── App.jsx               # Router setup, seed logic, context providers
 ├── App.css               # Global layout styles
 ├── index.css             # Base reset styles
 ├── main.jsx              # React entry point
 ├── data/
 │   └── events.json       # 20 static seed events
+├── lib/
+│   └── supabase.js       # Supabase client (reads from .env)
 ├── hooks/
 │   ├── useLocalStorage.js  # Generic localStorage read/write hook
-│   ├── useSaved.js         # Manages volunhub_saved
-│   └── useSignups.js       # Manages volunhub_signups
+│   ├── useAuth.js          # Supabase auth: user, loading, signIn, signUp, signOut
+│   ├── useSaved.js         # Thin wrapper → SavedContext
+│   └── useSignups.js       # Thin wrapper → SignupsContext
+├── context/
+│   ├── SignupsContext.jsx  # Fetches + caches signups on auth resolve
+│   ├── SavedContext.jsx    # Fetches + caches saved event IDs on auth resolve
+│   └── ProfileContext.jsx  # Fetches + caches profile + preferences on auth resolve
 ├── components/
 │   ├── Nav.jsx / Nav.css
 │   ├── EventCard.jsx / EventCard.css
-│   └── FilterBar.jsx / FilterBar.css
+│   ├── FilterBar.jsx / FilterBar.css
+│   └── ProtectedRoute.jsx
 └── pages/
     ├── Browse.jsx / Browse.css
+    ├── Home.jsx / Home.css
     ├── EventDetail.jsx / EventDetail.css
     ├── Saved.jsx / Saved.css
     ├── Signups.jsx / Signups.css
-    └── Agenda.jsx / Agenda.css
+    ├── Agenda.jsx / Agenda.css
+    ├── Profile.jsx / Profile.css
+    ├── Login.jsx / Login.css
+    └── SignUp.jsx (uses Login.css)
 ```
 
 ---
 
 ## Routes
 
-| Path | Component | Description |
-|------|-----------|-------------|
-| `/` | `Browse` | Event grid with search + filter |
-| `/events/:id` | `EventDetail` | Full event details, save + sign up actions |
-| `/saved` | `Saved` | User's saved/favorited events |
-| `/signups` | `Signups` | List view of signed-up events, cancel + edit note |
-| `/agenda` | `Agenda` | Weekly view of signed-up events with Prev/Next/This Week navigation, cancel |
+| Path | Component | Auth | Description |
+|------|-----------|------|-------------|
+| `/` | `Browse` | Public | Event grid with search + filter |
+| `/events/:id` | `EventDetail` | Public | Full event details, save + sign up |
+| `/home` | `Home` | Protected | Personalized recommendations by preference |
+| `/saved` | `Saved` | Protected | User's saved/favorited events |
+| `/signups` | `Signups` | Protected | List of signed-up events, cancel + edit note |
+| `/agenda` | `Agenda` | Protected | Weekly view of signed-up events |
+| `/profile` | `Profile` | Protected | Edit name, preferences, log out, clear data |
+| `/login` | `Login` | Public | Email/password login |
+| `/signup` | `SignUp` | Public | Account creation → redirects to /profile?welcome=true |
 
 ---
 
-## localStorage Data Model
+## Supabase Schema
 
-### `volunhub_events` — `Event[]`
-Seeded once from `events.json` on first app load. Never mutated after seeding (spots are derived, not decremented).
-```json
-{
-  "id": "evt-001",
-  "title": "City Park Cleanup",
-  "organization": "GreenCity Initiative",
-  "cause": "Environment",
-  "location": "Orlando, FL",
-  "date": "2026-04-05",
-  "time": "9:00 AM",
-  "type": "In-Person",
-  "description": "...",
-  "spotsAvailable": 30
-}
+### `profiles`
+```sql
+id uuid references auth.users primary key,
+email text,
+first_name text,
+last_name text,
+preferred_causes text[],
+preferred_locations text[],
+preferred_types text[],
+created_at timestamptz default now()
 ```
 
-### `volunhub_saved` — `string[]`
-Array of saved event IDs. Empty array by default.
-```json
-["evt-001", "evt-005"]
+### `signups`
+```sql
+id uuid primary key default gen_random_uuid(),
+user_id uuid references auth.users not null,
+event_id text not null,
+note text,
+created_at timestamptz default now()
 ```
 
-### `volunhub_signups` — `Signup[]`
-Array of signup objects. Empty array by default.
-```json
-{
-  "id": "signup-uuid",
-  "eventId": "evt-003",
-  "createdAt": "2026-03-10T14:00:00.000Z",
-  "note": "Looking forward to this!"
-}
+### `saved_events`
+```sql
+id uuid primary key default gen_random_uuid(),
+user_id uuid references auth.users not null,
+event_id text not null,
+created_at timestamptz default now()
 ```
 
-### `volunhub_preferences` — `Preferences` (groundwork for Complete Tier)
-Stores user filter preferences. Empty arrays by default.
-```json
-{
-  "causes": ["Environment", "Animals"],
-  "locations": ["Orlando, FL"],
-  "types": ["In-Person"]
-}
+RLS enabled on all three tables. Policy: `user_id = auth.uid()` for all operations.
+
+---
+
+## Context Architecture
+
+All user cloud data is fetched **once on auth resolve** and cached in context. Pages read from context — no per-page fetches.
+
 ```
+App
+├── SignupsProvider   → useSignups() / useSignupsContext()
+├── SavedProvider     → useSaved() / useSavedContext()
+└── ProfileProvider   → useProfileContext()
+```
+
+### Auth Loading Guard Pattern
+Pages using both `useAuth()` directly and a context need to guard on both loading states:
+```jsx
+const { user, loading: authLoading } = useAuth()
+const { profile, loading } = useProfileContext()
+if (authLoading || loading || !profile) return <p>Loading...</p>
+```
+This prevents crashes when the page's own `useAuth()` instance (starts with `user=null`) hasn't resolved yet, even if the context already has data.
 
 ---
 
@@ -107,37 +132,37 @@ Stores user filter preferences. Empty arrays by default.
 ### Spots Available (derived, not mutated)
 `spotsAvailable` on an event is never decremented. Remaining spots are calculated at render time:
 ```js
-const remaining = event.spotsAvailable - signups.filter(s => s.eventId === event.id).length
+const remaining = event.spotsAvailable - getSignupCountForEvent(event.id)
 ```
 
-### Shared Signups Logic
-Both `/signups` and `/agenda` read from the same `volunhub_signups` key via a shared `useSignups` hook. No logic is duplicated between the two pages.
+### Email Confirmation Disabled
+Supabase free tier allows only 2 confirmation emails/hour — incompatible with demo/grading scenarios. Email confirmation is permanently disabled for this project. Auth accounts are not deleted (requires service_role key); "Clear My Data" deletes all user data rows and resets the profile flow.
 
-### Seed Strategy
-On first load, `App.jsx` checks if `volunhub_events` exists in localStorage. If not, it seeds from `events.json`. This means:
-- Events data persists across page refreshes
-- If `events.json` is updated, users must clear localStorage to re-seed
-- A version/reset mechanism can be added later if needed
+### Events Stay in `events.json`
+Events are static seed data — only user-specific data (signups, saved, profiles) lives in Supabase.
 
 ### Back Navigation
-`EventDetail` uses `navigate(-1)` so the back button works correctly regardless of which page the user navigated from (Browse, Saved, etc.).
+`EventDetail` uses `navigate(-1)` so back works correctly from Browse, Home, Saved, etc.
+
+### Inline Confirmation Pattern
+Destructive actions (cancel signup, clear data) use an inline Yes/No confirm rather than browser `confirm()`. Consistent across Signups, Agenda, EventDetail, and Profile pages.
 
 ---
 
 ## Custom Hooks
 
-### `useLocalStorage(key, initialValue)`
-Generic hook. Works like `useState` but syncs to localStorage.
-```js
-const [value, setValue] = useLocalStorage('my-key', defaultValue)
-// setValue supports function updater pattern:
-setValue(prev => [...prev, newItem])
-```
+### `useAuth()`
+Returns: `{ user, loading, signIn, signUp, signOut }`
+Each call creates its own state instance. Use `loading` guard before accessing `user`.
 
 ### `useSaved()`
-Returns: `{ savedIds, isSaved(id), toggleSaved(id) }`
-Manages `volunhub_saved` string array.
+Returns: `{ savedIds, loading, isSaved(id), toggleSaved(id) }`
+Thin wrapper over `SavedContext`.
 
 ### `useSignups()`
-Returns: `{ signups, isSignedUp(eventId), getSignup(eventId), addSignup(eventId, note), cancelSignup(eventId), editNote(eventId, note), getSignupCountForEvent(eventId) }`
-Manages `volunhub_signups` array. Single source of truth for both Signups and Agenda pages.
+Returns: `{ signups, loading, isSignedUp(eventId), getSignup(eventId), addSignup(eventId, note), cancelSignup(eventId), editNote(eventId, note), getSignupCountForEvent(eventId) }`
+Thin wrapper over `SignupsContext`.
+
+### `useProfileContext()`
+Returns: `{ profile, loading, updateProfile(updates), resetProfile() }`
+`profile` shape: `{ firstName, lastName, causes, locations, types }`

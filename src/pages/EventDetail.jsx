@@ -15,6 +15,7 @@ function EventDetail() {
   const { loading: signupsLoading, isSignedUp, addSignup, cancelSignup, getSignupCountForEvent } = useSignups()
   const [showForm, setShowForm] = useState(false)
   const [note, setNote] = useState('')
+  const [confirmingCancel, setConfirmingCancel] = useState(false)
 
   const event = events.find(e => e.id === id)
 
@@ -84,7 +85,7 @@ function EventDetail() {
           </button>
 
           {signedUp ? (
-            <button className="btn-signup signed-up" onClick={() => cancelSignup(event.id)}>
+            <button className="btn-signup signed-up" onClick={() => setConfirmingCancel(prev => !prev)}>
               ✓ Signed Up — Cancel
             </button>
           ) : (
@@ -97,6 +98,16 @@ function EventDetail() {
             </button>
           )}
         </div>
+
+        {confirmingCancel && signedUp && (
+          <div className="cancel-confirm">
+            <p className="cancel-confirm-text">Cancel your signup?</p>
+            <div className="cancel-confirm-btns">
+              <button className="btn-confirm-yes" onClick={() => { cancelSignup(event.id); setConfirmingCancel(false) }}>Yes, cancel</button>
+              <button className="btn-confirm-no" onClick={() => setConfirmingCancel(false)}>No, keep it</button>
+            </div>
+          </div>
+        )}
 
         {showForm && !signedUp && (
           <div className="signup-form">

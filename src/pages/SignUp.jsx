@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import './Login.css'
 
@@ -9,9 +9,8 @@ function SignUp() {
   const [confirm, setConfirm] = useState('')
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(false)
-  const [confirmed, setConfirmed] = useState(false)
-  const [resendStatus, setResendStatus] = useState(null)
-  const { signUp, resendConfirmation } = useAuth()
+  const { signUp } = useAuth()
+  const navigate = useNavigate()
 
   async function handleSubmit(e) {
     e.preventDefault()
@@ -31,45 +30,12 @@ function SignUp() {
     setLoading(true)
     try {
       await signUp(email, password)
-      setConfirmed(true)
+      navigate('/profile?welcome=true')
     } catch (err) {
       setError(err.message)
     } finally {
       setLoading(false)
     }
-  }
-
-  async function handleResend() {
-    setResendStatus('sending')
-    try {
-      await resendConfirmation(email)
-      setResendStatus('sent')
-    } catch {
-      setResendStatus('error')
-    }
-  }
-
-  if (confirmed) {
-    return (
-      <div className="auth-container">
-        <div className="auth-card">
-          <h1 className="auth-title">Check your email</h1>
-          <p className="auth-subtitle">We sent a confirmation link to <strong>{email}</strong>. Click it to activate your account.</p>
-          <button
-            className="auth-btn"
-            style={{ marginTop: '1.5rem' }}
-            onClick={handleResend}
-            disabled={resendStatus === 'sending' || resendStatus === 'sent'}
-          >
-            {resendStatus === 'sending' ? 'Sending...' : resendStatus === 'sent' ? 'Email sent!' : 'Resend confirmation email'}
-          </button>
-          {resendStatus === 'error' && <p className="auth-error">Failed to resend. Try again.</p>}
-          <p className="auth-switch" style={{ marginTop: '1rem' }}>
-            Already confirmed? <Link to="/login">Log in</Link>
-          </p>
-        </div>
-      </div>
-    )
   }
 
   return (

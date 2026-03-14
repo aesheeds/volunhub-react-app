@@ -17,7 +17,7 @@ function Login() {
     setLoading(true)
     try {
       await signIn(email, password)
-      navigate('/')
+      navigate('/home')
     } catch (err) {
       setError(err.message)
     } finally {

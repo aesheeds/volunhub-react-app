@@ -4,7 +4,7 @@ import './EventCard.css'
 
 function EventCard({ event }) {
   const navigate = useNavigate()
-  const { getSignupCountForEvent } = useSignups()
+  const { getSignupCountForEvent, isSignedUp } = useSignups()
 
   const remainingSpots = event.spotsAvailable - getSignupCountForEvent(event.id)
 
@@ -13,6 +13,7 @@ function EventCard({ event }) {
       <div className="event-card-header">
         <span className="cause-tag">{event.cause}</span>
         <span className="type-tag">{event.type}</span>
+        {isSignedUp(event.id) && <span className="signedup-tag">✓ Signed Up</span>}
       </div>
       <h3 className="event-title">{event.title}</h3>
       <p className="event-org">{event.organization}</p>

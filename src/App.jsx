@@ -1,14 +1,17 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { SignupsProvider } from './context/SignupsContext'
 import { SavedProvider } from './context/SavedContext'
+import { ProfileProvider } from './context/ProfileContext'
 import Nav from './components/Nav'
 import Browse from './pages/Browse'
 import EventDetail from './pages/EventDetail'
 import Saved from './pages/Saved'
 import Signups from './pages/Signups'
 import Agenda from './pages/Agenda'
+import Home from './pages/Home'
 import Login from './pages/Login'
 import SignUp from './pages/SignUp'
+import Profile from './pages/Profile'
 import ProtectedRoute from './components/ProtectedRoute'
 import eventsData from './data/events.json'
 import './App.css'
@@ -22,6 +25,7 @@ function App() {
     <BrowserRouter>
       <SignupsProvider>
       <SavedProvider>
+      <ProfileProvider>
         <Nav />
         <main className="page-content">
           <Routes>
@@ -30,10 +34,13 @@ function App() {
             <Route path="/saved" element={<ProtectedRoute><Saved /></ProtectedRoute>} />
             <Route path="/signups" element={<ProtectedRoute><Signups /></ProtectedRoute>} />
             <Route path="/agenda" element={<ProtectedRoute><Agenda /></ProtectedRoute>} />
+            <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+            <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
           </Routes>
         </main>
+      </ProfileProvider>
       </SavedProvider>
       </SignupsProvider>
     </BrowserRouter>
