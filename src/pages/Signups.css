@@ -26,27 +26,12 @@
 
 .signup-item-tags {
   display: flex;
+  align-items: center;
   gap: 0.5rem;
   margin-bottom: 0.5rem;
 }
 
-.cause-tag {
-  font-size: 0.75rem;
-  font-weight: 600;
-  background: #e8f5e9;
-  color: #2e7d32;
-  padding: 0.2rem 0.6rem;
-  border-radius: 999px;
-}
-
-.type-tag {
-  font-size: 0.75rem;
-  font-weight: 600;
-  background: #ede7f6;
-  color: #5e35b1;
-  padding: 0.2rem 0.6rem;
-  border-radius: 999px;
-}
+/* cause-tag, type-tag are global — see App.css */
 
 .signup-item-title {
   font-size: 1.05rem;
@@ -85,73 +70,7 @@
   align-items: flex-end;
 }
 
-.cancel-confirm {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 0.4rem;
-}
-
-.cancel-confirm-text {
-  font-size: 0.85rem;
-  color: #c62828;
-  font-weight: 600;
-  margin: 0;
-}
-
-.cancel-confirm-btns {
-  display: flex;
-  gap: 0.4rem;
-}
-
-.btn-confirm-yes {
-  padding: 0.35rem 0.75rem;
-  font-size: 0.82rem;
-  font-weight: 600;
-  background: #c62828;
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background 0.15s;
-}
-
-.btn-confirm-yes:hover {
-  background: #b71c1c;
-}
-
-.btn-confirm-no {
-  padding: 0.35rem 0.75rem;
-  font-size: 0.82rem;
-  font-weight: 600;
-  background: none;
-  border: 1.5px solid #ccc;
-  border-radius: 6px;
-  color: #666;
-  cursor: pointer;
-  transition: border-color 0.15s;
-}
-
-.btn-confirm-no:hover {
-  border-color: #999;
-}
-
-.btn-cancel-signup {
-  padding: 0.45rem 1rem;
-  font-size: 0.85rem;
-  font-weight: 600;
-  border: 1.5px solid #c62828;
-  background: #fff;
-  color: #c62828;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background 0.15s;
-  white-space: nowrap;
-}
-
-.btn-cancel-signup:hover {
-  background: #ffebee;
-}
+/* cancel-confirm + btn-cancel-signup styles are global — see App.css */
 
 .btn-edit-note {
   padding: 0.45rem 1rem;
@@ -237,4 +156,19 @@
   color: #888;
   line-height: 2;
   font-size: 0.95rem;
+}
+
+@media (max-width: 480px) {
+  .signup-item {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .signup-item-actions {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    flex-shrink: unset;
+    width: 100%;
+  }
 }

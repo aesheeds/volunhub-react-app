@@ -18,17 +18,11 @@
 .event-card-header {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: 0.5rem;
 }
 
-.cause-tag {
-  font-size: 0.75rem;
-  font-weight: 600;
-  background: #e8f5e9;
-  color: #2e7d32;
-  padding: 0.2rem 0.6rem;
-  border-radius: 999px;
-}
+/* cause-tag is global — see App.css */
 
 .signedup-tag {
   font-size: 0.75rem;
@@ -40,14 +34,7 @@
   margin-left: auto;
 }
 
-.type-tag {
-  font-size: 0.75rem;
-  font-weight: 600;
-  background: #ede7f6;
-  color: #5e35b1;
-  padding: 0.2rem 0.6rem;
-  border-radius: 999px;
-}
+/* type-tag is global — see App.css */
 
 .event-title {
   font-size: 1.05rem;

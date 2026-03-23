@@ -144,27 +144,12 @@
 
 .agenda-item-tags {
   display: flex;
+  align-items: center;
   gap: 0.5rem;
   margin-bottom: 0.4rem;
 }
 
-.cause-tag {
-  font-size: 0.75rem;
-  font-weight: 600;
-  background: #e8f5e9;
-  color: #2e7d32;
-  padding: 0.2rem 0.6rem;
-  border-radius: 999px;
-}
-
-.type-tag {
-  font-size: 0.75rem;
-  font-weight: 600;
-  background: #ede7f6;
-  color: #5e35b1;
-  padding: 0.2rem 0.6rem;
-  border-radius: 999px;
-}
+/* cause-tag, type-tag are global — see App.css */
 
 .agenda-item-title {
   font-size: 1rem;
@@ -209,4 +194,45 @@
   color: #888;
   line-height: 2;
   font-size: 0.95rem;
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  /* Stack agenda cards vertically so tags never get squeezed */
+  .agenda-item {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .agenda-item-actions {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    flex-shrink: unset;
+    width: 100%;
+  }
+
+  /* Prevent week-nav from overflowing the viewport.
+     .week-range gets order: -1 so it appears on its own full-width row first,
+     then .week-nav-left and .week-nav-right sit on the second row, split left/right. */
+  .week-nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .week-range {
+    order: -1;
+    width: 100%;
+    text-align: center;
+    font-size: 0.9rem;
+  }
+
+  .btn-week-nav,
+  .btn-this-week {
+    font-size: 0.8rem;
+    padding: 0.35rem 0.7rem;
+  }
 }
