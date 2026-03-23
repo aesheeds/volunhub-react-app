@@ -1,7 +1,7 @@
 # VolunHub — Project Status
 
 ## Current State
-Phases A, B, and C are complete. Phase D has started — mobile bugs fixed and CSS consolidated. The app is live on Netlify with continuous deployment from GitHub (main branch).
+Phases A, B, C, and D0 are complete. Session 7 added bug fixes, a Sort feature on Browse, and mobile FilterBar improvements. Next up: D1 (style auth pages). The app is live on Netlify with continuous deployment from GitHub (main branch).
 
 **⚠️ Remember before final submission:** Email confirmation is intentionally disabled (Supabase free tier = 2 emails/hour, too limiting for demos). Decision is final — no re-enable needed.
 
@@ -27,12 +27,12 @@ Phases A, B, and C are complete. Phase D has started — mobile bugs fixed and C
 
 ### Pages & Components
 - [x] `Nav` — auth-aware: Home/My Signups/Agenda/Saved/Profile for logged-in users; Browse always visible; Log In for guests; mobile hamburger menu
-- [x] `Browse` (`/`) — event grid sorted by date, collapsible FilterBar with multi-select pill toggles
-- [x] `FilterBar` — search input + cause/location/type pill groups, active filter badge, "Clear all filters"
+- [x] `Browse` (`/`) — event grid with Sort (Date/Spots Remaining/A–Z) and collapsible FilterBar with multi-select pill toggles
+- [x] `FilterBar` — search input + Sort button (desktop) + cause/location/type pill groups, active filter badge, "Clear all filters"; Sort moves inside panel on mobile (≤480px)
 - [x] `EventCard` — cause/type tags, "✓ Signed Up" badge (blue), title, org, location, date, time, remaining spots, "Event Full" in red
 - [x] `EventDetail` (`/events/:id`) — full info, Save + Sign Up buttons (redirect to /login if guest), inline note form, cancel signup with inline confirmation panel, remaining spots derived, back uses `navigate(-1)`
 - [x] `Saved` (`/saved`) — saved events sorted by date, empty state message
-- [x] `Signups` (`/signups`) — list view sorted by date, cancel with inline confirm, shows note, Edit Note inline
+- [x] `Signups` (`/signups`) — list view sorted by date, cancel with inline confirm, shows note, Edit Note inline, orphaned signup notice with Remove button
 - [x] `Agenda` (`/agenda`) — weekly view with Prev/Next/This Week navigation, 7 day rows (Mon–Sun), Today badge, Cancel Signup with inline confirm
 
 ### Auth (Phase A — Complete)
@@ -69,11 +69,25 @@ Phases A, B, and C are complete. Phase D has started — mobile bugs fixed and C
 | C3 | Home page — recommended events by preference | ✅ Done |
 | C4 | `/home` route + Nav order (Home · Browse · My Signups · Agenda · Saved · Profile) | ✅ Done |
 | D0 | Mobile bug fixes + CSS consolidation | ✅ Done |
+| D0.5 | Bug fixes: ProtectedRoute spinner, double-click prevention, stale fetch cleanup, logout redirect, profile validation, orphaned signups | ✅ Done |
+| D0.6 | Sort feature on Browse (Date / Spots Remaining / A–Z), mobile FilterBar layout fix | ✅ Done |
 | D1 | Style auth pages to match VolunHub design | 🔲 Next |
 | D2 | Loading states / UX polish for async actions | 🔲 Next |
 | D3 | Error handling — wrong password, email taken, etc. | 🔲 Next |
 | D4 | Styling pass — fonts, images on EventDetail, mobile check | 🔲 Next |
 | — | Profile picture upload (Supabase Storage) | 🔲 Deferred |
+
+---
+
+## Current Styling Reference (before D4 pass)
+- **Font:** `system-ui, Avenir, Helvetica, Arial, sans-serif` (no custom fonts yet)
+- **Background:** `#f4f6f9`
+- **Text primary:** `#1a1a2e` | **Text secondary:** `#666` / `#888`
+- **Green:** `#2e7d32` / hover `#1b5e20` / light bg `#e8f5e9`
+- **Purple:** `#5e35b1` / light bg `#ede7f6`
+- **Red:** `#c62828` / light bg `#fdecea`
+- **Cards:** white, `border-radius: 10px`, `box-shadow: 0 2px 12px rgba(0,0,0,0.08)`
+- **Inputs/buttons:** `border-radius: 6px`, `border: 1px solid #ccc`
 
 ---
 

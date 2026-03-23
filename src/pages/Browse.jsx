@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import useLocalStorage from '../hooks/useLocalStorage'
+import useSignups from '../hooks/useSignups'
 import EventCard from '../components/EventCard'
 import FilterBar from '../components/FilterBar'
 import './Browse.css'
@@ -9,12 +10,22 @@ const DEFAULT_FILTERS = { search: '', causes: [], locations: [], types: [] }
 function Browse() {
   const [events] = useLocalStorage('volunhub_events', [])
   const [filters, setFilters] = useState(DEFAULT_FILTERS)
+  const [sortBy, setSortBy] = useState('date')
+  const { getSignupCountForEvent } = useSignups()
 
   function handleFilterChange(key, value) {
     setFilters(prev => ({ ...prev, [key]: value }))
   }
 
-  const sortedEvents = [...events].sort((a, b) => new Date(a.date) - new Date(b.date))
+  const sortedEvents = [...events].sort((a, b) => {
+    if (sortBy === 'spots') {
+      const aSpots = a.spotsAvailable - getSignupCountForEvent(a.id)
+      const bSpots = b.spotsAvailable - getSignupCountForEvent(b.id)
+      return bSpots - aSpots
+    }
+    if (sortBy === 'az') return a.title.localeCompare(b.title)
+    return new Date(a.date) - new Date(b.date)
+  })
 
   const filteredEvents = sortedEvents.filter(event => {
     const matchesSearch =
@@ -34,7 +45,7 @@ function Browse() {
       <p className="page-subtitle">
         {isFiltered ? `${filteredEvents.length} of ${events.length} events` : `${events.length} events available`}
       </p>
-      <FilterBar events={events} filters={filters} onFilterChange={handleFilterChange} />
+      <FilterBar events={events} filters={filters} onFilterChange={handleFilterChange} sortBy={sortBy} onSortChange={setSortBy} />
       <div className="events-grid">
         {filteredEvents.length > 0
           ? filteredEvents.map(event => <EventCard key={event.id} event={event} />)

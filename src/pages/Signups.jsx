@@ -48,9 +48,16 @@ function Signups() {
         </div>
       )}
 
-      {signedUpEvents.length > 0
-        ? <div className="signup-list">
-            {signedUpEvents.map(({ signup, event }) => (
+      {signedUpEvents.length === 0 && orphanedCount === 0 && (
+        <div className="empty-state">
+          <p>You haven't signed up for any events yet.</p>
+          <p>Browse events and click <strong>Sign Up</strong> to register.</p>
+        </div>
+      )}
+
+      {signedUpEvents.length > 0 && (
+        <div className="signup-list">
+          {signedUpEvents.map(({ signup, event }) => (
               <div key={signup.id} className="signup-item">
                 <div className="signup-item-info" onClick={() => navigate(`/events/${event.id}`)}>
                   <div className="signup-item-tags">
@@ -107,11 +114,8 @@ function Signups() {
               </div>
             ))}
           </div>
-        : <div className="empty-state">
-            <p>You haven't signed up for any events yet.</p>
-            <p>Browse events and click <strong>Sign Up</strong> to register.</p>
-          </div>
-      }
+        )}
+
     </div>
   )
 }
