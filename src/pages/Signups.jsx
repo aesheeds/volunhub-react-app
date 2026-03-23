@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import useLocalStorage from '../hooks/useLocalStorage'
 import useSignups from '../hooks/useSignups'
+import Spinner from '../components/Spinner'
 import './Signups.css'
 
 function Signups() {
@@ -27,7 +28,7 @@ function Signups() {
     setEditingId(null)
   }
 
-  if (loading) return <div className="page-loading">Loading...</div>
+  if (loading) return <Spinner />
 
   return (
     <div>

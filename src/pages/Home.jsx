@@ -2,13 +2,14 @@ import { Link } from 'react-router-dom'
 import { useProfileContext } from '../context/ProfileContext'
 import useLocalStorage from '../hooks/useLocalStorage'
 import EventCard from '../components/EventCard'
+import Spinner from '../components/Spinner'
 import './Home.css'
 
 function Home() {
   const { profile, loading } = useProfileContext()
   const [events] = useLocalStorage('volunhub_events', [])
 
-  if (loading || !profile) return <p className="home-loading">Loading your recommendations...</p>
+  if (loading || !profile) return <Spinner />
 
   const hasPreferences = profile &&
     (profile.causes.length > 0 || profile.locations.length > 0 || profile.types.length > 0)

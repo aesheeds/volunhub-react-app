@@ -4,6 +4,7 @@ import { useAuth } from '../hooks/useAuth'
 import { useProfileContext } from '../context/ProfileContext'
 import { supabase } from '../lib/supabase'
 import eventsData from '../data/events.json'
+import Spinner from '../components/Spinner'
 import './Profile.css'
 
 const CAUSES = [...new Set(eventsData.map(e => e.cause))].sort()
@@ -109,7 +110,7 @@ function Profile() {
     navigate('/login')
   }
 
-  if (authLoading || loading || !profile) return <p className="profile-loading">Loading profile...</p>
+  if (authLoading || loading || !profile) return <Spinner />
 
   return (
     <div className="profile-container">

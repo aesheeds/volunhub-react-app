@@ -1,6 +1,7 @@
 import useLocalStorage from '../hooks/useLocalStorage'
 import useSaved from '../hooks/useSaved'
 import EventCard from '../components/EventCard'
+import Spinner from '../components/Spinner'
 import './Saved.css'
 
 function Saved() {
@@ -10,7 +11,7 @@ function Saved() {
   const savedEvents = events.filter(e => savedIds.includes(e.id))
     .sort((a, b) => new Date(a.date) - new Date(b.date))
 
-  if (loading) return <div className="page-loading">Loading...</div>
+  if (loading) return <Spinner />
 
   return (
     <div>
