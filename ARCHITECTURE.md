@@ -6,7 +6,7 @@
 |-------|-----------|
 | Frontend framework | React 19 + Vite |
 | Routing | react-router-dom v7 |
-| Styling | Plain CSS (per-component files) |
+| Styling | Plain CSS (per-component files + shared globals in App.css) |
 | Auth | Supabase Auth |
 | Database | Supabase (Postgres) |
 | Static data | localStorage (events only) |
@@ -19,8 +19,8 @@
 ```
 src/
 ├── App.jsx               # Router setup, seed logic, context providers
-├── App.css               # Global layout styles
-├── index.css             # Base reset styles
+├── App.css               # Global layout + shared component styles (cause-tag, type-tag, cancel-confirm, btn-cancel-signup)
+├── index.css             # Base reset styles (box-sizing, overflow-x: hidden)
 ├── main.jsx              # React entry point
 ├── data/
 │   └── events.json       # 20 static seed events

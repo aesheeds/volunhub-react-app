@@ -1,7 +1,7 @@
 # VolunHub — Project Status
 
 ## Current State
-Phases A, B, and C are complete. Phase D (polish) is next. The app is live on Netlify with continuous deployment from GitHub (main branch).
+Phases A, B, and C are complete. Phase D has started — mobile bugs fixed and CSS consolidated. The app is live on Netlify with continuous deployment from GitHub (main branch).
 
 **⚠️ Remember before final submission:** Email confirmation is intentionally disabled (Supabase free tier = 2 emails/hour, too limiting for demos). Decision is final — no re-enable needed.
 
@@ -68,6 +68,7 @@ Phases A, B, and C are complete. Phase D (polish) is next. The app is live on Ne
 | C2 | Save preferences to `profiles` table via ProfileContext | ✅ Done |
 | C3 | Home page — recommended events by preference | ✅ Done |
 | C4 | `/home` route + Nav order (Home · Browse · My Signups · Agenda · Saved · Profile) | ✅ Done |
+| D0 | Mobile bug fixes + CSS consolidation | ✅ Done |
 | D1 | Style auth pages to match VolunHub design | 🔲 Next |
 | D2 | Loading states / UX polish for async actions | 🔲 Next |
 | D3 | Error handling — wrong password, email taken, etc. | 🔲 Next |
@@ -83,6 +84,8 @@ Phases A, B, and C are complete. Phase D (polish) is next. The app is live on Ne
 - **Signed-up badge on EventCard** — blue "✓ Signed Up" pill visible on Browse and Home grids
 - **Cancel confirm on EventDetail** — inline panel below action buttons (matches Signups/Agenda pattern)
 - **Saved moved after Agenda in nav** — Signups/Agenda are action-oriented; Saved is a wishlist
+- **Shared CSS in App.css** — `.cause-tag`, `.type-tag`, `.cancel-confirm`, `.btn-cancel-signup` and related classes are defined once in `App.css`; page CSS files reference them with a comment
+- **Mobile card stacking** — Signups and Agenda cards switch to `flex-direction: column` at ≤480px so tags never get squeezed and buttons sit left-aligned below the content
 
 ---
 
