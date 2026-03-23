@@ -70,6 +70,7 @@ function EventDetail() {
       <button className="back-btn" onClick={() => navigate(-1)}>← Back</button>
 
       <div className="detail-card">
+        <img src={event.image} alt={event.cause} className="detail-banner" />
         <div className="detail-tags">
           <span className="cause-tag">{event.cause}</span>
           <span className="type-tag">{event.type}</span>

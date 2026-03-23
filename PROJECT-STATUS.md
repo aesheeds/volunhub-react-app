@@ -1,7 +1,7 @@
 # VolunHub — Project Status
 
 ## Current State
-Phases A, B, C, D0–D4 are all complete. Session 8 applied full brand styling, error handling, and loading states. App is feature-complete and ready for final review. The app is live on Netlify with continuous deployment from GitHub (main branch).
+Phases A, B, C, D0–D4 are complete. Session 8 applied full brand styling, error handling, loading spinners, and per-event images. Next planned feature: Add Event page (localStorage-based, protected route). The app is live on Netlify with continuous deployment from GitHub (main branch).
 
 **⚠️ Remember before final submission:** Email confirmation is intentionally disabled (Supabase free tier = 2 emails/hour, too limiting for demos). Decision is final — no re-enable needed.
 
@@ -75,6 +75,8 @@ Phases A, B, C, D0–D4 are all complete. Session 8 applied full brand styling, 
 | D2 | Loading states / UX polish for async actions | ✅ Done |
 | D3 | Error handling — wrong password, email taken, etc. | ✅ Done |
 | D4 | Styling pass — fonts, images on EventDetail, mobile check | ✅ Done |
+| D5 | Per-event images on cards + detail banner | ✅ Done |
+| E1 | Add Event page — localStorage-based form, protected route | 🔲 Next |
 | — | Profile picture upload (Supabase Storage) | 🔲 Deferred |
 
 ---

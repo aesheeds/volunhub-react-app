@@ -16,7 +16,8 @@ import ProtectedRoute from './components/ProtectedRoute'
 import eventsData from './data/events.json'
 import './App.css'
 
-if (!localStorage.getItem('volunhub_events')) {
+const storedEvents = localStorage.getItem('volunhub_events')
+if (!storedEvents || !JSON.parse(storedEvents)[0]?.image) {
   localStorage.setItem('volunhub_events', JSON.stringify(eventsData))
 }
 

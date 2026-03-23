@@ -23,7 +23,7 @@ src/
 ├── index.css             # Base reset styles (box-sizing, overflow-x: hidden)
 ├── main.jsx              # React entry point
 ├── data/
-│   └── events.json       # 20 static seed events
+│   └── events.json       # 20 static seed events (each with image, cause, type, etc.)
 ├── lib/
 │   └── supabase.js       # Supabase client (reads from .env)
 ├── hooks/
@@ -35,10 +35,13 @@ src/
 │   ├── SignupsContext.jsx  # Fetches + caches signups on auth resolve
 │   ├── SavedContext.jsx    # Fetches + caches saved event IDs on auth resolve
 │   └── ProfileContext.jsx  # Fetches + caches profile + preferences on auth resolve
+├── utils/
+│   └── causeImages.js    # Cause → Unsplash image URL mapping (fallback for user-created events)
 ├── components/
 │   ├── Nav.jsx / Nav.css
 │   ├── EventCard.jsx / EventCard.css
 │   ├── FilterBar.jsx / FilterBar.css
+│   ├── Spinner.jsx / Spinner.css
 │   └── ProtectedRoute.jsx
 └── pages/
     ├── Browse.jsx / Browse.css
@@ -138,8 +141,16 @@ const remaining = event.spotsAvailable - getSignupCountForEvent(event.id)
 ### Email Confirmation Disabled
 Supabase free tier allows only 2 confirmation emails/hour — incompatible with demo/grading scenarios. Email confirmation is permanently disabled for this project. Auth accounts are not deleted (requires service_role key); "Clear My Data" deletes all user data rows and resets the profile flow.
 
-### Events Stay in `events.json`
-Events are static seed data — only user-specific data (signups, saved, profiles) lives in Supabase.
+### Events Stay in `events.json` (for now)
+Seed events are static — only user-specific data (signups, saved, profiles) lives in Supabase. The seed condition checks for the presence of an `image` field to auto-reseed when the data shape changes:
+```js
+if (!storedEvents || !JSON.parse(storedEvents)[0]?.image) {
+  localStorage.setItem('volunhub_events', JSON.stringify(eventsData))
+}
+```
+
+### Planned: Add Event (E1)
+User-created events will be appended to `localStorage('volunhub_events')` via a protected `/add-event` form. They follow the same shape as seed events, with `causeImages.js` providing a fallback image based on the chosen cause. Created events persist across refreshes but not across devices or localStorage clears.
 
 ### Back Navigation
 `EventDetail` uses `navigate(-1)` so back works correctly from Browse, Home, Saved, etc.
