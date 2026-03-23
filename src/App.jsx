@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import { SignupsProvider } from './context/SignupsContext'
 import { SavedProvider } from './context/SavedContext'
 import { ProfileProvider } from './context/ProfileContext'
@@ -20,26 +20,37 @@ if (!localStorage.getItem('volunhub_events')) {
   localStorage.setItem('volunhub_events', JSON.stringify(eventsData))
 }
 
+function AppContent() {
+  const location = useLocation()
+  const isAuthPage = ['/login', '/signup'].includes(location.pathname)
+
+  return (
+    <>
+      {!isAuthPage && <Nav />}
+      <main className={isAuthPage ? '' : 'page-content'}>
+        <Routes>
+          <Route path="/" element={<Browse />} />
+          <Route path="/events/:id" element={<EventDetail />} />
+          <Route path="/saved" element={<ProtectedRoute><Saved /></ProtectedRoute>} />
+          <Route path="/signups" element={<ProtectedRoute><Signups /></ProtectedRoute>} />
+          <Route path="/agenda" element={<ProtectedRoute><Agenda /></ProtectedRoute>} />
+          <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+          <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} />
+        </Routes>
+      </main>
+    </>
+  )
+}
+
 function App() {
   return (
     <BrowserRouter>
       <SignupsProvider>
       <SavedProvider>
       <ProfileProvider>
-        <Nav />
-        <main className="page-content">
-          <Routes>
-            <Route path="/" element={<Browse />} />
-            <Route path="/events/:id" element={<EventDetail />} />
-            <Route path="/saved" element={<ProtectedRoute><Saved /></ProtectedRoute>} />
-            <Route path="/signups" element={<ProtectedRoute><Signups /></ProtectedRoute>} />
-            <Route path="/agenda" element={<ProtectedRoute><Agenda /></ProtectedRoute>} />
-            <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
-            <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<SignUp />} />
-          </Routes>
-        </main>
+        <AppContent />
       </ProfileProvider>
       </SavedProvider>
       </SignupsProvider>

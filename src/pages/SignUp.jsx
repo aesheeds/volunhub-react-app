@@ -40,6 +40,11 @@ function SignUp() {
 
   return (
     <div className="auth-container">
+      <Link to="/" className="auth-brand">
+        <img src="/volunhub-logo-white.png" alt="VolunHub logo" className="auth-logo" />
+        <span className="auth-brand-name">VolunHub</span>
+      </Link>
+
       <div className="auth-card">
         <h1 className="auth-title">Create an account</h1>
         <p className="auth-subtitle">Join VolunHub to save and sign up for events</p>
@@ -91,6 +96,9 @@ function SignUp() {
 
         <p className="auth-switch">
           Already have an account? <Link to="/login">Log in</Link>
+        </p>
+        <p className="auth-back">
+          <Link to="/">← Back to Browse</Link>
         </p>
       </div>
     </div>

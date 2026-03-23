@@ -27,6 +27,11 @@ function Login() {
 
   return (
     <div className="auth-container">
+      <Link to="/" className="auth-brand">
+        <img src="/volunhub-logo-white.png" alt="VolunHub logo" className="auth-logo" />
+        <span className="auth-brand-name">VolunHub</span>
+      </Link>
+
       <div className="auth-card">
         <h1 className="auth-title">Welcome back</h1>
         <p className="auth-subtitle">Log in to your VolunHub account</p>
@@ -64,6 +69,9 @@ function Login() {
 
         <p className="auth-switch">
           Don't have an account? <Link to="/signup">Sign up</Link>
+        </p>
+        <p className="auth-back">
+          <Link to="/">← Back to Browse</Link>
         </p>
       </div>
     </div>

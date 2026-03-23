@@ -1,7 +1,7 @@
 .profile-welcome {
-  background: #e8f5e9;
-  border-left: 4px solid #2e7d32;
-  color: #1b5e20;
+  background: #eef5da;
+  border-left: 4px solid #4a6b1e;
+  color: #3a5518;
   border-radius: 6px;
   padding: 0.85rem 1rem;
   font-size: 0.92rem;
@@ -92,7 +92,7 @@
 }
 
 .profile-input:focus {
-  border-color: #2e7d32;
+  border-color: #4a6b1e;
 }
 
 .profile-input-readonly {
@@ -132,19 +132,19 @@
 }
 
 .profile-pill:hover {
-  border-color: #5e35b1;
-  color: #5e35b1;
+  border-color: #634E76;
+  color: #634E76;
 }
 
 .profile-pill-active {
-  background: #5e35b1;
-  border-color: #5e35b1;
+  background: #634E76;
+  border-color: #634E76;
   color: #fff;
 }
 
 .profile-pill-active:hover {
-  background: #4527a0;
-  border-color: #4527a0;
+  background: #4e3b5e;
+  border-color: #4e3b5e;
   color: #fff;
 }
 
@@ -162,7 +162,7 @@
 .profile-save-btn {
   width: 100%;
   padding: 0.75rem;
-  background: #2e7d32;
+  background: #4a6b1e;
   color: #fff;
   border: none;
   border-radius: 6px;
@@ -173,7 +173,7 @@
 }
 
 .profile-save-btn:hover:not(:disabled) {
-  background: #1b5e20;
+  background: #3a5518;
 }
 
 .profile-save-btn:disabled {
@@ -182,7 +182,7 @@
 }
 
 .profile-save-btn-saved {
-  background: #388e3c;
+  background: #5a7a28;
 }
 
 /* Divider + sign out */

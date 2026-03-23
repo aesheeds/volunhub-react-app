@@ -5,7 +5,7 @@
 }
 
 body {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Montserrat', system-ui, Avenir, Helvetica, Arial, sans-serif;
   background-color: #f4f6f9;
   color: #1a1a2e;
   min-height: 100vh;
@@ -35,8 +35,8 @@ body {
 .cause-tag {
   font-size: 0.75rem;
   font-weight: 600;
-  background: #e8f5e9;
-  color: #2e7d32;
+  background: #eef5da;
+  color: #4a6b1e;
   padding: 0.2rem 0.6rem;
   border-radius: 999px;
   text-align: center;
@@ -45,8 +45,8 @@ body {
 .type-tag {
   font-size: 0.75rem;
   font-weight: 600;
-  background: #ede7f6;
-  color: #5e35b1;
+  background: #ede8f0;
+  color: #634E76;
   padding: 0.2rem 0.6rem;
   border-radius: 999px;
   text-align: center;

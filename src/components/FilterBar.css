@@ -52,7 +52,7 @@
 }
 
 .search-input:focus {
-  border-color: #2e7d32;
+  border-color: #4a6b1e;
 }
 
 .sort-control {
@@ -91,7 +91,7 @@
 }
 
 .sort-option-active {
-  color: #2e7d32;
+  color: #4a6b1e;
   font-weight: 700;
 }
 
@@ -113,12 +113,12 @@
 
 .filter-toggle:hover,
 .filter-toggle-active {
-  border-color: #2e7d32;
-  color: #2e7d32;
+  border-color: #4a6b1e;
+  color: #4a6b1e;
 }
 
 .filter-badge {
-  background: #2e7d32;
+  background: #4a6b1e;
   color: #fff;
   font-size: 0.72rem;
   font-weight: 700;
@@ -173,19 +173,19 @@
 }
 
 .pill:hover {
-  border-color: #2e7d32;
-  color: #2e7d32;
+  border-color: #4a6b1e;
+  color: #4a6b1e;
 }
 
 .pill-active {
-  background: #2e7d32;
-  border-color: #2e7d32;
+  background: #4a6b1e;
+  border-color: #4a6b1e;
   color: #fff;
 }
 
 .pill-active:hover {
-  background: #1b5e20;
-  border-color: #1b5e20;
+  background: #3a5518;
+  border-color: #3a5518;
   color: #fff;
 }
 

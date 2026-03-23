@@ -69,7 +69,7 @@
 }
 
 .signup-item-info:hover .signup-item-title {
-  color: #2e7d32;
+  color: #4a6b1e;
 }
 
 .signup-item-tags {
@@ -124,9 +124,9 @@
   padding: 0.45rem 1rem;
   font-size: 0.85rem;
   font-weight: 600;
-  border: 1.5px solid #5e35b1;
+  border: 1.5px solid #634E76;
   background: #fff;
-  color: #5e35b1;
+  color: #634E76;
   border-radius: 6px;
   cursor: pointer;
   transition: background 0.15s;
@@ -134,7 +134,7 @@
 }
 
 .btn-edit-note:hover {
-  background: #ede7f6;
+  background: #ede8f0;
 }
 
 .edit-note-form {
@@ -158,7 +158,7 @@
 
 .edit-note-textarea:focus {
   outline: none;
-  border-color: #5e35b1;
+  border-color: #634E76;
 }
 
 .edit-note-btns {
@@ -170,7 +170,7 @@
   padding: 0.35rem 0.75rem;
   font-size: 0.82rem;
   font-weight: 600;
-  background: #5e35b1;
+  background: #634E76;
   color: #fff;
   border: none;
   border-radius: 6px;
@@ -179,7 +179,7 @@
 }
 
 .btn-save-note:hover {
-  background: #4527a0;
+  background: #4e3b5e;
 }
 
 .btn-cancel-edit {

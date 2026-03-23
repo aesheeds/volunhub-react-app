@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, Link } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import './Nav.css'
 
@@ -13,7 +13,10 @@ function Nav() {
 
   return (
     <nav className="nav">
-      <span className="nav-logo">VolunHub</span>
+      <Link to="/" className="nav-logo">
+        <img src="/volunhub-logo-white.png" alt="VolunHub" className="nav-logo-icon" />
+        <span className="nav-logo-text">olunHub</span>
+      </Link>
 
       {/* Desktop links */}
       <div className="nav-links">

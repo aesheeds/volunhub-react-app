@@ -52,7 +52,7 @@
 .home-cta-btn {
   display: inline-block;
   padding: 0.6rem 1.25rem;
-  background: #2e7d32;
+  background: #4a6b1e;
   color: #fff;
   border-radius: 6px;
   font-size: 0.9rem;
@@ -62,11 +62,11 @@
 }
 
 .home-cta-btn:hover {
-  background: #1b5e20;
+  background: #3a5518;
 }
 
 .home-browse-link {
-  color: #5e35b1;
+  color: #634E76;
   font-size: 0.9rem;
   font-weight: 600;
   text-decoration: none;
@@ -78,7 +78,7 @@
 
 /* Inline "Browse all events" link in subtitle */
 .home-browse-all {
-  color: #5e35b1;
+  color: #634E76;
   font-weight: 600;
   text-decoration: none;
 }

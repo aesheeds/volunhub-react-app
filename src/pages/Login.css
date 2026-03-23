@@ -1,21 +1,49 @@
 .auth-container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 60vh;
+  min-height: 100vh;
+  background: #634E76;
+  padding: 2rem 1rem;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.auth-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  text-decoration: none;
+}
+
+.auth-logo {
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+}
+
+.auth-brand-name {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.04em;
 }
 
 .auth-card {
   background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.18);
   padding: 2.5rem 2rem;
   width: 100%;
   max-width: 420px;
 }
 
 .auth-title {
-  font-size: 1.6rem;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.5rem;
   font-weight: 700;
   color: #1a1a2e;
   margin-bottom: 0.25rem;
@@ -56,30 +84,37 @@
   border: 1px solid #ccc;
   border-radius: 6px;
   font-size: 0.95rem;
+  font-family: 'Montserrat', sans-serif;
   background: #fafafa;
   outline: none;
   transition: border-color 0.15s;
 }
 
 .auth-input:focus {
-  border-color: #2e7d32;
+  border-color: #634E76;
 }
 
 .auth-btn {
   margin-top: 0.5rem;
   padding: 0.7rem;
-  background: #2e7d32;
+  background: #634E76;
   color: #fff;
   border: none;
   border-radius: 6px;
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 700;
+  font-family: 'Montserrat', sans-serif;
   cursor: pointer;
   transition: background 0.15s;
 }
 
 .auth-btn:hover {
-  background: #1b5e20;
+  background: #4e3b5e;
+}
+
+.auth-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 .auth-hint {
@@ -96,11 +131,34 @@
 }
 
 .auth-switch a {
-  color: #2e7d32;
-  font-weight: 600;
+  color: #634E76;
+  font-weight: 700;
   text-decoration: none;
 }
 
 .auth-switch a:hover {
+  color: #4e3b5e;
   text-decoration: underline;
+}
+
+.auth-back {
+  margin-top: 0.6rem;
+  text-align: center;
+  font-size: 0.8rem;
+}
+
+.auth-back a {
+  color: #a89ab8;
+  text-decoration: none;
+}
+
+.auth-back a:hover {
+  color: #634E76;
+  text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+  .auth-card {
+    padding: 2rem 1.25rem;
+  }
 }

@@ -40,15 +40,15 @@
 }
 
 .btn-week-nav:hover {
-  border-color: #2e7d32;
-  color: #2e7d32;
+  border-color: #4a6b1e;
+  color: #4a6b1e;
 }
 
 .btn-this-week {
   padding: 0.4rem 0.9rem;
   font-size: 0.85rem;
   font-weight: 600;
-  background: #2e7d32;
+  background: #4a6b1e;
   color: #fff;
   border: none;
   border-radius: 6px;
@@ -58,7 +58,7 @@
 }
 
 .btn-this-week:hover {
-  background: #1b5e20;
+  background: #3a5518;
 }
 
 /* Day groups */
@@ -80,21 +80,21 @@
   gap: 0.6rem;
   font-size: 0.95rem;
   font-weight: 700;
-  color: #2e7d32;
-  border-bottom: 2px solid #e8f5e9;
+  color: #4a6b1e;
+  border-bottom: 2px solid #eef5da;
   padding-bottom: 0.4rem;
   margin: 0;
 }
 
 .agenda-day--today .agenda-day-heading {
   color: #1a1a2e;
-  border-bottom-color: #5e35b1;
+  border-bottom-color: #4a6b1e;
 }
 
 .today-badge {
   font-size: 0.72rem;
   font-weight: 700;
-  background: #5e35b1;
+  background: #4a6b1e;
   color: #fff;
   padding: 0.15rem 0.5rem;
   border-radius: 999px;
@@ -139,7 +139,7 @@
 }
 
 .agenda-item-info:hover .agenda-item-title {
-  color: #2e7d32;
+  color: #4a6b1e;
 }
 
 .agenda-item-tags {
