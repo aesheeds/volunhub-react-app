@@ -65,6 +65,10 @@ function Profile() {
   }
 
   async function handleSave() {
+    if (!firstName.trim() || !lastName.trim()) {
+      setError('Please enter your first and last name.')
+      return
+    }
     setSaving(true)
     setError(null)
     setSaveStatus(null)

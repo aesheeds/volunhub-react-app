@@ -44,6 +44,7 @@ export function ProfileProvider({ children }) {
   }, [user?.id])
 
   async function updateProfile(updates) {
+    if (!user) return { error: new Error('Not logged in') }
     const { error } = await supabase.from('profiles').upsert({
       id: user.id,
       email: user.email,

@@ -12,13 +12,14 @@ function Signups() {
   const [editingId, setEditingId] = useState(null)
   const [editText, setEditText] = useState('')
 
-  const signedUpEvents = signups
-    .map(signup => ({
-      signup,
-      event: events.find(e => e.id === signup.event_id)
-    }))
+  const mapped = signups.map(signup => ({
+    signup,
+    event: events.find(e => e.id === signup.event_id)
+  }))
+  const signedUpEvents = mapped
     .filter(item => item.event)
     .sort((a, b) => new Date(a.event.date) - new Date(b.event.date))
+  const orphanedCount = mapped.filter(item => !item.event).length
 
   function handleCancel(eventId) {
     cancelSignup(eventId)
@@ -32,6 +33,20 @@ function Signups() {
     <div>
       <h1 className="page-title">My Signups</h1>
       <p className="page-subtitle">{signedUpEvents.length} event{signedUpEvents.length !== 1 ? 's' : ''} signed up</p>
+
+      {orphanedCount > 0 && (
+        <div className="signups-orphan-notice">
+          <p>{orphanedCount} of your signup{orphanedCount !== 1 ? 's are' : ' is'} for an event that is no longer available.</p>
+          <div className="signups-orphan-list">
+            {mapped.filter(item => !item.event).map(({ signup }) => (
+              <div key={signup.id} className="signups-orphan-item">
+                <span>Event ID: {signup.event_id}</span>
+                <button className="btn-orphan-remove" onClick={() => cancelSignup(signup.event_id)}>Remove</button>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {signedUpEvents.length > 0
         ? <div className="signup-list">

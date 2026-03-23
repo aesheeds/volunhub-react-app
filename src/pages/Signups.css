@@ -1,3 +1,51 @@
+.signups-orphan-notice {
+  background: #fff8e1;
+  border-left: 4px solid #f9a825;
+  color: #5d4037;
+  border-radius: 6px;
+  padding: 0.7rem 1rem;
+  font-size: 0.88rem;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.signups-orphan-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.signups-orphan-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  border: 1px solid #ffe082;
+  border-radius: 6px;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.85rem;
+  color: #888;
+}
+
+.btn-orphan-remove {
+  background: none;
+  border: 1.5px solid #f9a825;
+  color: #b07800;
+  border-radius: 6px;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn-orphan-remove:hover {
+  background: #f9a825;
+  color: #fff;
+}
+
 .signup-list {
   display: flex;
   flex-direction: column;

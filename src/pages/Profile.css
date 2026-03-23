@@ -80,6 +80,8 @@
 }
 
 .profile-input {
+  width: 100%;
+  box-sizing: border-box;
   padding: 0.6rem 0.75rem;
   border: 1px solid #ccc;
   border-radius: 6px;
