@@ -10,6 +10,7 @@ export function SignupsProvider({ children }) {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    let cancelled = false
     async function fetchSignups() {
       if (!user) {
         setSignups([])
@@ -21,10 +22,13 @@ export function SignupsProvider({ children }) {
         .from('signups')
         .select('*')
         .order('created_at', { ascending: true })
-      setSignups(data || [])
-      setLoading(false)
+      if (!cancelled) {
+        setSignups(data || [])
+        setLoading(false)
+      }
     }
     fetchSignups()
+    return () => { cancelled = true }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user?.id])
 

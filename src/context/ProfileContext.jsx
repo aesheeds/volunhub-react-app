@@ -10,6 +10,7 @@ export function ProfileProvider({ children }) {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    let cancelled = false
     if (!user) {
       setProfile(null)
       setLoading(false)
@@ -25,18 +26,21 @@ export function ProfileProvider({ children }) {
         .eq('id', user.id)
         .single()
 
-      setProfile(data ? {
-        firstName: data.first_name || '',
-        lastName: data.last_name || '',
-        causes: data.preferred_causes || [],
-        locations: data.preferred_locations || [],
-        types: data.preferred_types || [],
-      } : { firstName: '', lastName: '', causes: [], locations: [], types: [] })
+      if (!cancelled) {
+        setProfile(data ? {
+          firstName: data.first_name || '',
+          lastName: data.last_name || '',
+          causes: data.preferred_causes || [],
+          locations: data.preferred_locations || [],
+          types: data.preferred_types || [],
+        } : { firstName: '', lastName: '', causes: [], locations: [], types: [] })
 
-      setLoading(false)
+        setLoading(false)
+      }
     }
 
     fetchProfile()
+    return () => { cancelled = true }
   }, [user?.id])
 
   async function updateProfile(updates) {

@@ -16,6 +16,8 @@ function EventDetail() {
   const [showForm, setShowForm] = useState(false)
   const [note, setNote] = useState('')
   const [confirmingCancel, setConfirmingCancel] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+  const [savedPending, setSavedPending] = useState(false)
 
   const event = events.find(e => e.id === id)
 
@@ -36,10 +38,18 @@ function EventDetail() {
   const signedUp = isSignedUp(event.id)
   const full = remainingSpots !== null && remainingSpots <= 0
 
-  function handleConfirmSignup() {
-    addSignup(event.id, note)
+  async function handleConfirmSignup() {
+    setSubmitting(true)
+    await addSignup(event.id, note)
     setNote('')
     setShowForm(false)
+    setSubmitting(false)
+  }
+
+  async function handleToggleSaved() {
+    setSavedPending(true)
+    await toggleSaved(event.id)
+    setSavedPending(false)
   }
 
   return (
@@ -79,7 +89,8 @@ function EventDetail() {
         <div className="detail-actions">
           <button
             className={`btn-save ${isSaved(event.id) ? 'saved' : ''}`}
-            onClick={() => user ? toggleSaved(event.id) : navigate('/login')}
+            onClick={() => user ? handleToggleSaved() : navigate('/login')}
+            disabled={savedPending}
           >
             {isSaved(event.id) ? '♥ Saved' : '♡ Save Event'}
           </button>
@@ -120,7 +131,7 @@ function EventDetail() {
               rows={3}
             />
             <div className="signup-form-actions">
-              <button className="btn-confirm" onClick={handleConfirmSignup}>Confirm Sign Up</button>
+              <button className="btn-confirm" onClick={handleConfirmSignup} disabled={submitting}>{submitting ? 'Signing up…' : 'Confirm Sign Up'}</button>
               <button className="btn-cancel-form" onClick={() => { setShowForm(false); setNote('') }}>Cancel</button>
             </div>
           </div>

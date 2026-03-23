@@ -10,6 +10,7 @@ export function SavedProvider({ children }) {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    let cancelled = false
     async function fetchSaved() {
       if (!user) {
         setSavedIds([])
@@ -20,10 +21,13 @@ export function SavedProvider({ children }) {
       const { data } = await supabase
         .from('saved_events')
         .select('event_id')
-      setSavedIds(data ? data.map(row => row.event_id) : [])
-      setLoading(false)
+      if (!cancelled) {
+        setSavedIds(data ? data.map(row => row.event_id) : [])
+        setLoading(false)
+      }
     }
     fetchSaved()
+    return () => { cancelled = true }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user?.id])
 

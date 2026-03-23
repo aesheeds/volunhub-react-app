@@ -102,7 +102,7 @@ function Profile() {
 
   async function handleSignOut() {
     await signOut()
-    navigate('/')
+    navigate('/login')
   }
 
   if (authLoading || loading || !profile) return <p className="profile-loading">Loading profile...</p>
