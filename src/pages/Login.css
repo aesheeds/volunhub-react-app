@@ -117,10 +117,49 @@
   cursor: not-allowed;
 }
 
-.auth-hint {
+.auth-label-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.auth-req-list {
+  list-style: none;
+  padding: 0;
+  margin: 0.25rem 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.req-met,
+.req-unmet {
   font-size: 0.8rem;
-  color: #888;
-  font-weight: 400;
+  font-weight: 700;
+  padding-left: 1.2rem;
+  position: relative;
+}
+
+.req-met::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: #3a8c2f;
+}
+
+.req-unmet::before {
+  content: '✗';
+  position: absolute;
+  left: 0;
+  color: #aaa;
+}
+
+.req-met {
+  color: #3a8c2f;
+}
+
+.req-unmet {
+  color: #aaa;
 }
 
 .auth-switch {

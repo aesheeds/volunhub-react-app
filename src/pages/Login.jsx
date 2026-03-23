@@ -19,7 +19,14 @@ function Login() {
       await signIn(email, password)
       navigate('/home')
     } catch (err) {
-      setError(err.message)
+      const msg = err.message || ''
+      if (msg.toLowerCase().includes('invalid login credentials')) {
+        setError('Wrong email or password.')
+      } else if (msg.toLowerCase().includes('fetch') || msg.toLowerCase().includes('network')) {
+        setError('Connection error. Please check your internet and try again.')
+      } else {
+        setError('Something went wrong. Please try again.')
+      }
     } finally {
       setLoading(false)
     }

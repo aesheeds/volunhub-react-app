@@ -77,7 +77,7 @@ function Profile() {
 
     setSaving(false)
     if (error) {
-      setError(error.message)
+      setError('Could not save your profile. Please try again.')
       setSaveStatus('error')
     } else if (isNewUser) {
       navigate('/home')

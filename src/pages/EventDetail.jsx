@@ -18,6 +18,7 @@ function EventDetail() {
   const [confirmingCancel, setConfirmingCancel] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [savedPending, setSavedPending] = useState(false)
+  const [actionError, setActionError] = useState(null)
 
   const event = events.find(e => e.id === id)
 
@@ -40,16 +41,28 @@ function EventDetail() {
 
   async function handleConfirmSignup() {
     setSubmitting(true)
-    await addSignup(event.id, note)
-    setNote('')
-    setShowForm(false)
-    setSubmitting(false)
+    setActionError(null)
+    try {
+      await addSignup(event.id, note)
+      setNote('')
+      setShowForm(false)
+    } catch {
+      setActionError('Could not sign up. Please try again.')
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   async function handleToggleSaved() {
     setSavedPending(true)
-    await toggleSaved(event.id)
-    setSavedPending(false)
+    setActionError(null)
+    try {
+      await toggleSaved(event.id)
+    } catch {
+      setActionError('Could not update saved status. Please try again.')
+    } finally {
+      setSavedPending(false)
+    }
   }
 
   return (
@@ -109,6 +122,8 @@ function EventDetail() {
             </button>
           )}
         </div>
+
+        {actionError && <p className="auth-error">{actionError}</p>}
 
         {confirmingCancel && signedUp && (
           <div className="cancel-confirm">

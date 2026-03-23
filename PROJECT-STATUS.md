@@ -1,7 +1,7 @@
 # VolunHub — Project Status
 
 ## Current State
-Phases A, B, C, D0, D1, and D4 (styling pass) are complete. Session 8 applied full brand styling across all pages using the VolunHub color palette and Montserrat font. Next up: D2 (loading states) and D3 (error handling). The app is live on Netlify with continuous deployment from GitHub (main branch).
+Phases A, B, C, D0, D1, D3, and D4 are complete. Session 8 applied full brand styling and error handling. Next up: D2 (loading states). The app is live on Netlify with continuous deployment from GitHub (main branch).
 
 **⚠️ Remember before final submission:** Email confirmation is intentionally disabled (Supabase free tier = 2 emails/hour, too limiting for demos). Decision is final — no re-enable needed.
 
@@ -73,7 +73,7 @@ Phases A, B, C, D0, D1, and D4 (styling pass) are complete. Session 8 applied fu
 | D0.6 | Sort feature on Browse (Date / Spots Remaining / A–Z), mobile FilterBar layout fix | ✅ Done |
 | D1 | Style auth pages to match VolunHub design | ✅ Done |
 | D2 | Loading states / UX polish for async actions | 🔲 Next |
-| D3 | Error handling — wrong password, email taken, etc. | 🔲 Next |
+| D3 | Error handling — wrong password, email taken, etc. | ✅ Done |
 | D4 | Styling pass — fonts, images on EventDetail, mobile check | ✅ Done |
 | — | Profile picture upload (Supabase Storage) | 🔲 Deferred |
 

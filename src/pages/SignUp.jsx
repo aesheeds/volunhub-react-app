@@ -12,6 +12,13 @@ function SignUp() {
   const { signUp } = useAuth()
   const navigate = useNavigate()
 
+  const reqs = {
+    length: password.length >= 6,
+    number: /\d/.test(password),
+    special: /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(password),
+    match: password.length > 0 && password === confirm,
+  }
+
   async function handleSubmit(e) {
     e.preventDefault()
     setError(null)
@@ -32,7 +39,14 @@ function SignUp() {
       await signUp(email, password)
       navigate('/profile?welcome=true')
     } catch (err) {
-      setError(err.message)
+      const msg = err.message || ''
+      if (msg.toLowerCase().includes('user already registered')) {
+        setError('An account with this email already exists.')
+      } else if (msg.toLowerCase().includes('fetch') || msg.toLowerCase().includes('network')) {
+        setError('Connection error. Please check your internet and try again.')
+      } else {
+        setError('Something went wrong. Please try again.')
+      }
     } finally {
       setLoading(false)
     }
@@ -64,18 +78,26 @@ function SignUp() {
             />
           </label>
 
-          <label className="auth-label">
-            Password
-            <input
-              type="password"
-              className="auth-input"
-              value={password}
-              onChange={e => setPassword(e.target.value)}
-              required
-              minLength={6}
-            />
-            <span className="auth-hint">At least 6 characters, including a number and a special character</span>
-          </label>
+          <div className="auth-label-group">
+            <label className="auth-label">
+              Password
+              <input
+                type="password"
+                className="auth-input"
+                value={password}
+                onChange={e => setPassword(e.target.value)}
+                required
+                minLength={6}
+              />
+            </label>
+            {password.length > 0 && (
+              <ul className="auth-req-list">
+                <li className={reqs.length ? 'req-met' : 'req-unmet'}>At least 6 characters</li>
+                <li className={reqs.number ? 'req-met' : 'req-unmet'}>Contains a number</li>
+                <li className={reqs.special ? 'req-met' : 'req-unmet'}>Contains a special character</li>
+              </ul>
+            )}
+          </div>
 
           <label className="auth-label">
             Confirm Password
@@ -87,6 +109,11 @@ function SignUp() {
               required
               minLength={6}
             />
+            {confirm.length > 0 && (
+              <span className={reqs.match ? 'req-met' : 'req-unmet'}>
+                {reqs.match ? 'Passwords match' : 'Passwords do not match'}
+              </span>
+            )}
           </label>
 
           <button type="submit" className="auth-btn" disabled={loading}>
