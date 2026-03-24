@@ -1,0 +1,252 @@
+/* MyEvents page — uses .cause-tag, .type-tag, .cancel-confirm, .btn-cancel-signup, .btn-confirm-yes/no from App.css */
+
+.my-events-page {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* ── Header ── */
+.my-events-header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* ── Shared buttons ── */
+.me-btn-primary {
+  padding: 0.55rem 1.25rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  background: #4a8c3c;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.15s;
+  white-space: nowrap;
+}
+
+.me-btn-primary:hover {
+  background: #3a7030;
+}
+
+.me-btn-secondary {
+  padding: 0.55rem 1.25rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  background: #fff;
+  color: #555;
+  border: 1.5px solid #ccc;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+
+.me-btn-secondary:hover {
+  border-color: #999;
+}
+
+.me-btn-edit {
+  padding: 0.45rem 1rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  background: #fff;
+  color: #634E76;
+  border: 1.5px solid #634E76;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.15s;
+  white-space: nowrap;
+}
+
+.me-btn-edit:hover {
+  background: #ede8f0;
+}
+
+/* ── Form card ── */
+.me-form-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  padding: 1.75rem 2rem;
+}
+
+.me-form-card h2 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin-bottom: 1.25rem;
+}
+
+.me-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.me-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.me-form-row-half {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.me-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.me-form-group label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #444;
+}
+
+.me-form-optional {
+  font-weight: 400;
+  color: #888;
+  font-size: 0.8rem;
+}
+
+.me-form-group input,
+.me-form-group select,
+.me-form-group textarea {
+  padding: 0.55rem 0.75rem;
+  font-size: 0.9rem;
+  border: 1.5px solid #ccc;
+  border-radius: 6px;
+  background: #fff;
+  color: #1a1a2e;
+  font-family: inherit;
+  transition: border-color 0.15s;
+}
+
+.me-form-group input:focus,
+.me-form-group select:focus,
+.me-form-group textarea:focus {
+  outline: none;
+  border-color: #2e7d32;
+}
+
+.me-form-group textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+.me-form-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+/* ── Event list ── */
+.me-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.me-empty {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: #888;
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+.me-item {
+  display: flex;
+  gap: 1rem;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
+  overflow: hidden;
+  align-items: stretch;
+}
+
+.me-item-img {
+  width: 130px;
+  min-width: 130px;
+  flex-shrink: 0;
+}
+
+.me-item-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.me-item-info {
+  flex: 1;
+  padding: 0.9rem 0.5rem 0.9rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  min-width: 0;
+}
+
+.me-item-tags {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.me-item-info h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin: 0.1rem 0;
+}
+
+.me-item-meta {
+  font-size: 0.82rem;
+  color: #666;
+}
+
+.me-item-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.9rem 1rem 0.9rem 0;
+  align-items: flex-end;
+  flex-shrink: 0;
+}
+
+/* ── Mobile ── */
+@media (max-width: 600px) {
+  .me-form-card {
+    padding: 1.25rem 1rem;
+  }
+
+  .me-form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .me-item {
+    flex-direction: column;
+  }
+
+  .me-item-img {
+    width: 100%;
+    min-width: unset;
+    height: 140px;
+  }
+
+  .me-item-info {
+    padding: 0.75rem 1rem 0;
+  }
+
+  .me-item-actions {
+    flex-direction: row;
+    padding: 0.75rem 1rem 1rem;
+    align-items: center;
+  }
+}

@@ -12,6 +12,7 @@ import Home from './pages/Home'
 import Login from './pages/Login'
 import SignUp from './pages/SignUp'
 import Profile from './pages/Profile'
+import MyEvents from './pages/MyEvents'
 import ProtectedRoute from './components/ProtectedRoute'
 import eventsData from './data/events.json'
 import './App.css'
@@ -37,6 +38,7 @@ function AppContent() {
           <Route path="/agenda" element={<ProtectedRoute><Agenda /></ProtectedRoute>} />
           <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
           <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+          <Route path="/my-events" element={<ProtectedRoute><MyEvents /></ProtectedRoute>} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
         </Routes>

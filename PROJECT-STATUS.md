@@ -1,7 +1,7 @@
 # VolunHub — Project Status
 
 ## Current State
-Phases A, B, C, D0–D4 are complete. Session 8 applied full brand styling, error handling, loading spinners, and per-event images. Next planned feature: Add Event page (localStorage-based, protected route). The app is live on Netlify with continuous deployment from GitHub (main branch).
+Phases A, B, C, D0–D4, E1 are complete. Session 9 added the My Events page, event images on My Signups cards, Profile icon in nav, and bug fixes (Nav.css corrupted margin, broken image fallback, negative spots cap). The app is live on Netlify with continuous deployment from GitHub (main branch).
 
 **⚠️ Remember before final submission:** Email confirmation is intentionally disabled (Supabase free tier = 2 emails/hour, too limiting for demos). Decision is final — no re-enable needed.
 
@@ -76,7 +76,7 @@ Phases A, B, C, D0–D4 are complete. Session 8 applied full brand styling, erro
 | D3 | Error handling — wrong password, email taken, etc. | ✅ Done |
 | D4 | Styling pass — fonts, images on EventDetail, mobile check | ✅ Done |
 | D5 | Per-event images on cards + detail banner | ✅ Done |
-| E1 | Add Event page — localStorage-based form, protected route | 🔲 Next |
+| E1 | My Events page — post/edit/delete user events, localStorage, protected route | ✅ Done |
 | — | Profile picture upload (Supabase Storage) | 🔲 Deferred |
 
 ---

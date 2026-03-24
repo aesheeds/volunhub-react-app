@@ -87,6 +87,18 @@
   background: rgba(255, 255, 255, 0.25);
 }
 
+/* Profile icon link */
+.nav-profile-icon {
+  display: flex;
+  align-items: center;
+  padding-bottom: 0 !important;
+  border-bottom: 2px solid transparent;
+}
+
+.nav-profile-icon.active {
+  border-bottom-color: #B4D682;
+}
+
 /* Hamburger */
 .nav-hamburger {
   display: none;

@@ -60,6 +60,9 @@ function Signups() {
         <div className="signup-list">
           {signedUpEvents.map(({ signup, event }) => (
               <div key={signup.id} className="signup-item">
+                <div className="signup-item-img">
+                  <img src={event.image} alt={event.title} />
+                </div>
                 <div className="signup-item-info" onClick={() => navigate(`/events/${event.id}`)}>
                   <div className="signup-item-tags">
                     <span className="cause-tag">{event.cause}</span>
