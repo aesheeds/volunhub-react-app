@@ -1,16 +1,8 @@
-# Transcript Highlights
+### Changing the Agenda View to make it distinct (Session 2, midway)
+The initial Agenda page just grouped signups by date, which didn't make sense with the Signups page. It looked exasctly the same. We redesigned it into a weekly calendar view, which was my idea from the start. We used Prev/Next/This Week navigation, seven-day rows labeled Mon–Sun, and a "Today" badge. 
 
-### 1. Deploying Early Instead of Building First (Session 1, early)
-Rather than building features in order, I pivoted to deploying the boilerplate app to Netlify first before any real functionality existed. This set up continuous deployment from day one, so every feature after that could be tested on a live URL immediately instead of discovering deployment issues at the end.
+### Fixing 15 second load times (Session 4, midway)
+After migrating `useSignups` to fetch from Supabase, pages took 15 seconds to load. I asked Claude why this was happening and it said that the `user` object was changing reference on every token refresh, triggering infinite re-fetches. We figured that by changing the `useEffect` dependency from `[user]` to `[user?.id]` it would help with loading times. It ended up fixing instantly!!
 
-### 2. Redesigning Filters from Dropdowns to Pill Toggles (Session 1, midway)
-After Claude implemented single-select dropdowns for filtering volunteer events by cause and location, I asked for multi-select so users could pick more than one category at a time. We switched to a pill/tag toggle system where clicking highlights a filter in green — a pattern that ended up being reused throughout the app.
-
-### 3. Keeping Spot Counts Derived, Not Stored (Session 1, midway)
-I asked whether spot counts would actually update when someone signed up. Claude explained the choice to compute remaining spots as `spotsAvailable - signupsCount` rather than mutating event data directly. This kept the data model clean and prevented the kind of sync bugs that come from storing the same value in two places.
-
-### 4. Iterating the Edit Note UX into an Inline Form (Session 2, early–midway)
-The first version of "Edit Note" opened a separate dialog in the actions column, but I asked to move it inline where the note actually displays, then asked again to move the Save/Cancel buttons directly beneath the textarea instead of off to the side. Each small correction tightened the visual grouping until the form felt natural — and that inline-edit pattern became the standard for the rest of the app.
-
-### 5. Pivoting Agenda from a Duplicate View to a Weekly Calendar (Session 2, midway)
-The initial Agenda page just grouped signups by date, which was redundant with the Signups page. Instead of keeping it, we redesigned it into a weekly calendar with Prev/Next/This Week navigation, seven-day rows labeled Mon–Sun, and a "Today" badge. It required custom date math but turned Agenda into the most distinct and polished page in the MVP.
+### Pushing back on styling choices(Session 8, midway)
+After Claude swapped all buttons to match the purple color I wanted to use, I had wanted the buttons for the signup and save to be green instead. Green felt right, there was already too much purple, and color green felt like it fit better with the buttons purpose. I had Claude change the color to a more darker green (#4a6b1e, #3a5518) that kept the color meaning while staying on-brand!
