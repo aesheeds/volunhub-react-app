@@ -27,8 +27,8 @@ body {
 .page-content {
   max-width: 900px;
   width: 100%;
-  margin: 2rem auto;
-  padding: 0 1.5rem;
+  margin: 0 auto;
+  padding: calc(60px + 1.5rem) 1.5rem 2rem;
 }
 
 /* ── Shared pill tags (Browse, Home, Signups, Agenda, EventDetail) ── */

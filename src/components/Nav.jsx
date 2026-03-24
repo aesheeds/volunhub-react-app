@@ -1,18 +1,37 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { NavLink, Link } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import './Nav.css'
 
 function Nav() {
-  const { user } = useAuth()
+  const { user, loading } = useAuth()
   const [menuOpen, setMenuOpen] = useState(false)
+  const [navHidden, setNavHidden] = useState(false)
+  const lastScrollY = useRef(0)
+
+  useEffect(() => {
+    function handleScroll() {
+      const currentY = window.scrollY
+      if (currentY < 10) {
+        setNavHidden(false)
+      } else if (currentY > lastScrollY.current) {
+        setNavHidden(true)
+        setMenuOpen(false)
+      } else {
+        setNavHidden(false)
+      }
+      lastScrollY.current = currentY
+    }
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   function closeMenu() {
     setMenuOpen(false)
   }
 
   return (
-    <nav className="nav">
+    <nav className={`nav${navHidden ? ' nav-hidden' : ''}`}>
       <Link to="/" className="nav-logo">
         <img src="/volunhub-logo-white.png" alt="VolunHub" className="nav-logo-icon" />
         <span className="nav-logo-text">olunHub</span>
@@ -20,9 +39,9 @@ function Nav() {
 
       {/* Desktop links */}
       <div className="nav-links">
-        {user && <NavLink to="/home">Home</NavLink>}
-        <NavLink to="/" end>Browse</NavLink>
-        {user && (
+        {!loading && user && <NavLink to="/home">Home</NavLink>}
+        {!loading && <NavLink to="/" end>Browse</NavLink>}
+        {!loading && user && (
           <>
             <NavLink to="/signups">My Signups</NavLink>
             <NavLink to="/agenda">Agenda</NavLink>
@@ -35,7 +54,7 @@ function Nav() {
             </NavLink>
           </>
         )}
-        {!user && <NavLink to="/login" className="nav-login-btn">Log In</NavLink>}
+        {!loading && !user && <NavLink to="/login" className="nav-login-btn">Log In</NavLink>}
       </div>
 
       {/* Hamburger button (mobile) */}
@@ -47,9 +66,9 @@ function Nav() {
       {/* Mobile menu */}
       {menuOpen && (
         <div className="nav-mobile-menu">
-          {user && <NavLink to="/home" onClick={closeMenu}>Home</NavLink>}
-          <NavLink to="/" end onClick={closeMenu}>Browse</NavLink>
-          {user && (
+          {!loading && user && <NavLink to="/home" onClick={closeMenu}>Home</NavLink>}
+          {!loading && <NavLink to="/" end onClick={closeMenu}>Browse</NavLink>}
+          {!loading && user && (
             <>
               <NavLink to="/signups" onClick={closeMenu}>My Signups</NavLink>
               <NavLink to="/agenda" onClick={closeMenu}>Agenda</NavLink>
@@ -58,7 +77,7 @@ function Nav() {
               <NavLink to="/profile" onClick={closeMenu}>Profile</NavLink>
             </>
           )}
-          {!user && <NavLink to="/login" onClick={closeMenu}>Log In</NavLink>}
+          {!loading && !user && <NavLink to="/login" onClick={closeMenu}>Log In</NavLink>}
         </div>
       )}
     </nav>

@@ -41,7 +41,11 @@ function Signups() {
           <div className="signups-orphan-list">
             {mapped.filter(item => !item.event).map(({ signup }) => (
               <div key={signup.id} className="signups-orphan-item">
-                <span>Event ID: {signup.event_id}</span>
+                <span>
+                  {signup.event_id.startsWith('user-')
+                    ? 'Event only available on the device where it was created'
+                    : 'Event no longer available'}
+                </span>
                 <button className="btn-orphan-remove" onClick={() => cancelSignup(signup.event_id)}>Remove</button>
               </div>
             ))}

@@ -14,6 +14,7 @@ import SignUp from './pages/SignUp'
 import Profile from './pages/Profile'
 import MyEvents from './pages/MyEvents'
 import ProtectedRoute from './components/ProtectedRoute'
+import WelcomeModal from './components/WelcomeModal'
 import eventsData from './data/events.json'
 import './App.css'
 
@@ -29,6 +30,7 @@ function AppContent() {
   return (
     <>
       {!isAuthPage && <Nav />}
+      {!isAuthPage && <WelcomeModal />}
       <main className={isAuthPage ? '' : 'page-content'}>
         <Routes>
           <Route path="/" element={<Browse />} />
